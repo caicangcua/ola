@@ -1,1 +1,355 @@
-Welcome to ola ship Cần Thơ
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="#">
+    <title>Cơm Phúc Ký</title><!--http://codenpixel.com/demo/foodpicky/food_results.html#-->
+    <style type="text/css">
+        .loading{text-transform:uppercase;width:150px;text-align:center;line-height:50px;position:absolute;left:0;right:0;top:45%;margin:auto;z-index:99999999999}.loading span{position:relative;z-index:999;color:#fff}.loading:before{content:'';background:#61bdb6;width:128px;height:36px;display:block;position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;animation:2s loadingBefore infinite ease-in-out}@keyframes loadingBefore{0%{transform:translateX(-14px)}50%{transform:translateX(14px)}100%{transform:translateX(-14px)}}.loading:after{content:'';background:#ff3600;width:14px;height:60px;display:block;position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;opacity:.5;animation:2s loadingAfter infinite ease-in-out}@keyframes loadingAfter{0%{transform:translateX(-50px)}50%{transform:translateX(50px)}100%{transform:translateX(-50px)}}
+    </style>
+    <style type="text/css">
+
+       .menucontainer, .menubtt, .menunav {
+  position: absolute;
+}
+
+.menucontainer {
+    z-index: 10001;
+    top: 10px;
+    left: 10px;
+}
+
+#toggle {
+  display: none;
+}
+
+.menubtt {
+  z-index: 999;
+  width: 43px;
+  height: 43px;
+  background: #F28482;
+  border-radius: 100%;
+  transition: all 0.5s ease-in-out;
+  box-shadow: 1px 3px 10px 0 rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.menubtt:before {
+  position: absolute;
+  top: 20px;
+  left: 9px;
+  content: '';
+  width: 25px;
+  height: 2px;
+  background: #FFF;
+  transform: rotate(90deg);
+}
+.menubtt:after {
+  position: absolute;
+  top: 20px;
+  left: 9px;
+  content: '';
+  width: 25px;
+  height: 2px;
+  background: #FFF;
+}
+
+.menunav {
+  transform: translateY(-10%);
+  opacity: 0;
+  top: 13px;
+  left: -10px;
+  transition: all 0.5s ease-in-out;
+  background: #FFF;
+  width: 150px;
+  border-radius: 5px;
+  transform: translateY(0%);
+  box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.menunav a {
+  text-align: center;
+  display: block;
+  margin: 20px 0;
+  color: #F28482;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+#toggle:checked ~ .menunav {
+  opacity: 1;
+  transform: translateY(10%);
+}
+
+#toggle:checked ~ .menubtt {
+  transform: rotate(135deg);
+  box-shadow: 0 0 0 0 transparent;
+}
+
+    </style>
+</head>
+
+<body class="home">
+
+    <div class="menucontainer">
+        <input type="checkbox" id="toggle" />
+        <label class="menubtt" for="toggle"></label>
+        <menunav class="menunav">
+            <a href="http://sashatran.com" target="_blank">About</a>
+            <a href="https://codepen.io/sashatran/pens/public/" target="_blank">Home</a>
+            <a href="https://www.linkedin.com/in/sasha-tran-23498989/" target="_blank">Hire Me</a>
+            <a href="https://www.youtube.com/channel/UCCATAa8MWoBuH-sR_Jlx29A" target="_blank">Subscribe</a>
+        </menunav>
+    </div>
+
+    <div class="loading srcfade">
+        <div style="display:none" class="col-xs-12 col-sm-12 col-md-6 col-lg-4 food-item">
+            <div class="food-item-wrap">
+                <div class="figure-wrap bg-image">
+                    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                    <!--<div class="distance"><i class="fa fa-pin"></i>1240m</div>
+                    <div class="review pull-right"><a href="#">198 reviews</a> </div>-->
+                </div>
+                <div class="content">
+                    <h5><a href="javascript:void(0)"></a></h5>
+                    <div class="product-name">Cơm hộp - Cơm trưa văn phòng</div>
+                    <div class="price-btn-block"></div>
+                </div>
+            </div>
+        </div>
+        <span>Loading ...</span>
+    </div>
+    <div id="sticky-anchor"></div>
+    <div id="sticky" class="widget clearfix stick" style="display:none">
+        <div class="widget-heading">
+            <button type="button" class="btn btn-danger" onclick="args.cb('BACK');">THOÁT</button>
+            <select id="selPRICE" class="custom-select pull-right">
+                <option value="0" selected="">(Tất cả )</option>
+                <option value="25.000đ">Giá 25 K</option>
+                <option value="35.000đ">Giá 35 K</option>
+            </select>
+            <span style="color: black;line-height: 38px;padding-right: 10px;float:right">
+                Chọn theo giá:
+            </span>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <section class="gl-page-content-section noselect">
+        <div class="container-fluid">
+            <div id="map-result-section" class="map-result-wrapper">
+                <div class="search-result-wrapper">
+                </div>
+            </div>
+        </div>
+        <footer class="footer" style="display:none">
+            <div class="container">
+                <div class="bottom-footer">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4">
+                            <h5>CƠM PHÚC KÝ</h5>
+                            <p>376 CMT8, P.Bùi Hữu Nghĩa, Q.Bình Thủy, TP.Cần Thơ<br />Phone: 0939 344099</p>
+                        </div>
+                        <div class="col-xs-12 col-sm-5">
+                            <h5>THÔNG TIN</h5>
+                            <p>Facebook: Com Phuc Ky<br />Website: http://phucky.dnd.vn</p>
+                        </div>
+                        <div class="col-xs-12 col-sm-3">
+                            <a href="javascript:void(0)"> <img width="70px" src="imgs/logo.png" alt="Footer logo"> </a> <span style="font-weight:bold">CƠM HỘP ONLINE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+    <script type="text/javascript">
+        Node.prototype.hasClass = function (e) { return this.classList ? this.classList.contains(e) : -1 < this.className.indexOf(e) }, Node.prototype.addClass = function (e) { if (this.classList) this.classList.add(e); else if (!this.hasClass(e)) { var t = this.className.split(" "); t.push(e), this.className = t.join(" ") } return this }, Node.prototype.removeClass = function (e) { if (this.classList) this.classList.remove(e); else { var t = this.className.split(" "); t.splice(t.indexOf(e), 1), this.className = t.join(" ") } return this }; var jscss_addin, filesadded = ""; function loadjscssfile(e, t, s) { if ("js" == t) (i = document.createElement("script")).setAttribute("type", "text/javascript"), i.setAttribute("src", e); else if ("css" == t) { var i; (i = document.createElement("link")).setAttribute("rel", "stylesheet"), i.setAttribute("type", "text/css"), i.setAttribute("href", e) } void 0 !== i && (s && (i.onload = s), document.getElementsByTagName("head")[0].appendChild(i)) } function checkloadjscssfile(e, t, s) { -1 == filesadded.indexOf("[" + e + "]") ? (loadjscssfile(e, t, s), filesadded += "[" + e + "]") : s && s() } function removejscssfile(e, t) { for (var s = 0, i = "js" == t ? "script" : "css" == t ? "link" : "none", a = "js" == t ? "src" : "css" == t ? "href" : "none", n = document.getElementsByTagName(i), c = n.length; c >= 0; c--) n[c] && null != n[c].getAttribute(a) && -1 != n[c].getAttribute(a).indexOf(e) && (n[c].parentNode.removeChild(n[c]), s += 1); s > 0 && alert("Removed " + s + " instances of " + e) } function createjscssfile(e, t) { if ("js" == t) { var s = document.createElement("script"); s.setAttribute("type", "text/javascript"), s.setAttribute("src", e) } else "css" == t && ((s = document.createElement("link")).setAttribute("rel", "stylesheet"), s.setAttribute("type", "text/css"), s.setAttribute("href", e)); return s } function replacejscssfile(e, t, s) { for (var i = 0, a = "js" == s ? "script" : "css" == s ? "link" : "none", n = "js" == s ? "src" : "css" == s ? "href" : "none", c = document.getElementsByTagName(a), r = c.length; r >= 0; r--) if (c[r] && null != c[r].getAttribute(n) && -1 != c[r].getAttribute(n).indexOf(e)) { var l = createjscssfile(t, s); c[r].parentNode.replaceChild(l, c[r]), i += 1 } i > 0 && alert("Replaced " + i + " instances of " + e + " with " + t) };
+        var args, $q = 'querySelector', $evt = 'addEventListener', sticky = document.getElementById('sticky'), anchor = sticky.previousElementSibling, frmD, itemp, defered = 2, dongcua, baseURI = location.protocol + '//' + location.host;
+        function trochoi(params) {
+            args = params;
+            dongcua = params['dongcua'];
+            batdau(0);
+        }
+        function batdau(causeBy) {
+            setTimeout(function () {
+                checkloadjscssfile('bootstrap.min.css' + '?v=' + (new Date()).getTime(), 'css', function () {
+                    checkloadjscssfile('index.css' + '?v=' + (new Date()).getTime(), 'css', function () {
+                        defered--;
+                        if (defered == 0) init(frmD.SP);
+                    });
+                });
+            }, 1);
+            comsvr({ 'url': "sp.json" + '?v=' + (new Date()).getTime(), 'type': "application/json" }, function (reps) {
+                frmD = JSON.parse(reps);
+                defered--;
+                if (causeBy == 1) tinhDongCua();
+                if (defered == 0) init(frmD.SP);
+            });
+        }
+
+        function randomSP(array) {
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+        function filterSP(SP, gia) {
+            var rstSP = [];
+            for (var i in SP) {
+                if (SP.hasOwnProperty(i)) {
+                    var prod = SP[i];
+                    if (prod.gia == gia) {
+                        rstSP.push(JSON.parse(JSON.stringify(prod)));
+                    }
+                }
+            }
+            return rstSP;
+        }
+        function init(SP) {
+            var loading = document[$q]('.loading'), sticky_relocate = function () {
+
+            }
+                , lst = document[$q]('.search-result-wrapper')//search-result-wrapper
+                , lstRow = document.createElement("div");
+            //
+            itemp = loading.firstElementChild;
+            itemp.removeAttribute("style"); itemp = itemp.cloneNode(true);
+            loading.removeChild(loading.firstElementChild);
+            loading.classList.toggle('fade');
+            lstRow.className = "row";
+            lst.appendChild(lstRow);
+            //
+            renderSP(lstRow, SP);
+            //
+            sticky[$q]('#selPRICE')[$evt]('change', function (e) {
+                lstRow.innerHTML = '';
+                var Prods, filterVAL = this.value;
+                if (filterVAL == '0') {
+                    Prods = SP;
+                } else {
+                    Prods = filterSP(SP, filterVAL);
+                };
+                if (Prods.length > 0) { renderSP(lstRow, Prods); } else { lstRow.innerHTML = '<h2 class="notfound">Không có kết quả!</h2>' };
+            });
+            sticky.style.display = 'block';
+            document[$q]('.footer').style.display = '';
+            //
+            sticky_relocate();
+            loading.nextElementSibling[$evt]("scroll", sticky_relocate)//gl-page-content-section
+            window[$evt]('resize', function (event) {
+                sticky_relocate();
+            });
+        }
+        function renderSP(lstRow, SP) {
+            randomSP(SP);
+            //
+            for (var i = 0; i < SP.length; i++) {
+                var atMenu = itemp.cloneNode(true), cont = atMenu[$q]('.content'), dathang = cont[$q]('.price-btn-block'), actOrder = '<div class="nghiban"></div>';
+                lstRow.appendChild(atMenu);
+                //
+                (function (atthumb, prod) {
+                    var dlimg = new Image(), dummy = '?v=' + (new Date()).getTime(), imgReady = function (url) {
+                        var img$ = atthumb[$q](".bg-image"), els = img$[$q](".lds-ellipsis"), bgsize = 'contain';
+                        if (!url) {
+                            url = dlimg.getAttribute('src');
+                            bgsize = 'cover';
+                        };
+                        img$.style.background = 'url(' + url + ') center center / ' + bgsize + ' no-repeat';
+                        img$.removeChild(els);
+                    };
+                    dlimg.onload = function () {
+                        imgReady();
+                    };
+                    dlimg.onerror = function () {
+                        imgReady('https://i.imgur.com/lpB6PQE.png');
+                    };
+                    dlimg.src = baseURI + '/' + SP[i].ma + '/0.jpg' + dummy;
+                })(atMenu, SP[i]);
+                cont[$q]('h5 a').innerHTML = SP[i].ten; if (dongcua == '1') actOrder = '<a href="javascript:void(0)" class="btn theme-btn-dash pull-right">Gọi Món</a>';
+                dathang.innerHTML = '<span class="price">' + SP[i].gia + '</span>' + actOrder;
+                if (dongcua == '1') {
+                    dathang[$q]('.btn').onclick = (function (ma) {
+                        return function () {
+                            if (args) {
+                                args.cb('DATHANG', { 'id': baseURI + '/' + ma });
+                            } else {
+                                redirect({ 'id': baseURI + '/' + ma });
+                            }
+                        };
+                    })(SP[i].ma);
+                };
+            };
+        }
+        function comsvr(ajaxP, cb) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', ajaxP['url']);
+            xhr.setRequestHeader("Content-Type", ajaxP['type']);
+            xhr.send();
+            xhr.onload = function () {
+                if (xhr.status != 200) { // analyze HTTP status of the response
+
+
+                } else { // show the result
+                    cb(xhr.response);
+                }
+            };
+            xhr.onerror = function () {
+
+            };
+        };
+        function urlP(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        };
+        function tinhDongCua() {
+            if (frmD && frmD.hasOwnProperty('lcDB') && frmD['lcDB'].hasOwnProperty('gio')) {
+                var atD = new Date();
+                var fh = new Date(); fh.setHours(0); fh.setMinutes(0); fh.setSeconds(0);
+                var th = new Date(); th.setHours(0); th.setMinutes(0); th.setSeconds(0);
+                var t = frmD['lcDB']['gio'][atD.getDay()], tu = t[0].split(':'), den = t[1].split(':');
+                fh = fh.setMinutes(60 * parseInt(tu[0]) + parseInt(tu[1])); fh = new Date(fh);
+                th = th.setMinutes(60 * parseInt(den[0]) + parseInt(den[1])); th = new Date(th);
+                if (fh <= atD && atD <= th) {
+                    dongcua = "1";
+                } else {
+                    dongcua = "0";
+                };
+            }
+        }
+        function redirect(exData) {
+            var form = document.createElement('form');
+            form.method = 'post';
+            form.action = 'http://phucky.dnd.vn';// 'http://192.168.1.91:10996/phucky';
+            //
+            var input = document.createElement('input'), postData = exData || {};
+            input.type = "hidden";
+            input.name = "pricekm";
+            //
+            postData['ncc'] = frmD['lcDB']['storename'];
+            //if (!postData.hasOwnProperty('id')) postData['id'] = encodeURIComponent(window.location.href);
+            input.value = JSON.stringify(postData);
+            //
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+        };
+        (function () {
+            if (urlP('v') == '') {
+                document[$q]('.btn.btn-danger').style.visibility = 'hidden';
+                batdau(1);
+            };
+        })();
+    </script>
+</body>
+
+</html>
