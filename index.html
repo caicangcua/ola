@@ -15,159 +15,241 @@
     <style type="text/css">
 
        .menucontainer, .menubtt, .menunav {
-  position: absolute;
-}
+              position: absolute;
+            }
 
-.menucontainer {
-    z-index: 10001;
-    top: 10px;
-    left: 10px;
-}
+            .menucontainer {
+                z-index: 10001;
+                top: 10px;
+                left: 10px;
+            }
 
-#toggle {
-  display: none;
-}
+            #toggle {
+              display: none;
+            }
 
-.menubtt {
-  z-index: 999;
-  width: 43px;
-  height: 43px;
-  background: #F28482;
-  border-radius: 100%;
-  transition: all 0.5s ease-in-out;
-  box-shadow: 1px 3px 10px 0 rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-}
-.menubtt:before {
-  position: absolute;
-  top: 20px;
-  left: 9px;
-  content: '';
-  width: 25px;
-  height: 2px;
-  background: #FFF;
-  transform: rotate(90deg);
-}
-.menubtt:after {
-  position: absolute;
-  top: 20px;
-  left: 9px;
-  content: '';
-  width: 25px;
-  height: 2px;
-  background: #FFF;
-}
+            .menubtt {
+              z-index: 999;
+              width: 43px;
+              height: 43px;
+              background: #F28482;
+              border-radius: 100%;
+              transition: all 0.5s ease-in-out;
+              box-shadow: 1px 3px 10px 0 rgba(0, 0, 0, 0.3);
+              cursor: pointer;
+            }
+            .menubtt:before {
+              position: absolute;
+              top: 20px;
+              left: 9px;
+              content: '';
+              width: 25px;
+              height: 2px;
+              background: #FFF;
+              transform: rotate(90deg);
+            }
+            .menubtt:after {
+              position: absolute;
+              top: 20px;
+              left: 9px;
+              content: '';
+              width: 25px;
+              height: 2px;
+              background: #FFF;
+            }
 
-.menunav {
-  transform: translateY(-10%);
-  opacity: 0;
-  top: 13px;
-  left: -10px;
-  transition: all 0.5s ease-in-out;
-  background: #FFF;
-  width: 150px;
-  border-radius: 5px;
-  transform: translateY(0%);
-  box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.1);
-}
+            .menunav {
+              transform: translateY(-10%);
+              opacity: 0;
+              top: 13px;
+              left: -10px;
+              transition: all 0.5s ease-in-out;
+              background: #FFF;
+              width: 150px;
+              border-radius: 5px;
+              transform: translateY(0%);
+              box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.1);
+            }
 
-.menunav a {
-  text-align: center;
-  display: block;
-  margin: 20px 0;
-  color: #F28482;
-  text-decoration: none;
-  font-family: 'Roboto', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
+            .menunav a {
+              text-align: center;
+              display: block;
+              margin: 20px 0;
+              color: #F28482;
+              text-decoration: none;
+              font-family: 'Roboto', sans-serif;
+              text-transform: uppercase;
+              letter-spacing: 2px;
+            }
 
-#toggle:checked ~ .menunav {
-  opacity: 1;
-  transform: translateY(10%);
-}
+            #toggle:checked ~ .menunav {
+              opacity: 1;
+              transform: translateY(10%);
+            }
 
-#toggle:checked ~ .menubtt {
-  transform: rotate(135deg);
-  box-shadow: 0 0 0 0 transparent;
-}
+            #toggle:checked ~ .menubtt {
+              transform: rotate(135deg);
+              box-shadow: 0 0 0 0 transparent;
+            }
+
+        .nhaptt {
+            width:100%;
+            table-layout:fixed;
+        }
+                    .nhaptt td {
+            height:40px; vertical-align:middle;overflow:hidden;
+        }
+        .nhaptt td:first-child {
+            width:80px;
+        }
+        .nhaptt input {
+            width:100%;
+        }
 
     </style>
 </head>
 
-<body class="home">
-
-    <div class="menucontainer">
-        <input type="checkbox" id="toggle" />
-        <label class="menubtt" for="toggle"></label>
-        <menunav class="menunav">
-            <a href="http://sashatran.com" target="_blank">About</a>
-            <a href="https://codepen.io/sashatran/pens/public/" target="_blank">Home</a>
-            <a href="https://www.linkedin.com/in/sasha-tran-23498989/" target="_blank">Hire Me</a>
-            <a href="https://www.youtube.com/channel/UCCATAa8MWoBuH-sR_Jlx29A" target="_blank">Subscribe</a>
-        </menunav>
-    </div>
-
-    <div class="loading srcfade">
-        <div style="display:none" class="col-xs-12 col-sm-12 col-md-6 col-lg-4 food-item">
-            <div class="food-item-wrap">
-                <div class="figure-wrap bg-image">
-                    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-                    <!--<div class="distance"><i class="fa fa-pin"></i>1240m</div>
-                    <div class="review pull-right"><a href="#">198 reviews</a> </div>-->
-                </div>
-                <div class="content">
-                    <h5><a href="javascript:void(0)"></a></h5>
-                    <div class="product-name">Cơm hộp - Cơm trưa văn phòng</div>
-                    <div class="price-btn-block"></div>
-                </div>
-            </div>
-        </div>
-        <span>Loading ...</span>
-    </div>
-    <div id="sticky-anchor"></div>
-    <div id="sticky" class="widget clearfix stick" style="display:none">
-        <div class="widget-heading">
-            <button type="button" class="btn btn-danger" onclick="args.cb('BACK');">THOÁT</button>
-            <select id="selPRICE" class="custom-select pull-right">
-                <option value="0" selected="">(Tất cả )</option>
-                <option value="25.000đ">Giá 25 K</option>
-                <option value="35.000đ">Giá 35 K</option>
-            </select>
-            <span style="color: black;line-height: 38px;padding-right: 10px;float:right">
-                Chọn theo giá:
-            </span>
-            <div class="clearfix"></div>
-        </div>
-    </div>
-    <section class="gl-page-content-section noselect">
-        <div class="container-fluid">
-            <div id="map-result-section" class="map-result-wrapper">
-                <div class="search-result-wrapper">
-                </div>
-            </div>
-        </div>
+<body >
+    <div class="home" style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;z-index:10004;background-color:antiquewhite">
         <footer class="footer" style="display:none">
             <div class="container">
                 <div class="bottom-footer">
                     <div class="row">
                         <div class="col-xs-12 col-sm-4">
-                            <h5>CƠM PHÚC KÝ</h5>
-                            <p>376 CMT8, P.Bùi Hữu Nghĩa, Q.Bình Thủy, TP.Cần Thơ<br />Phone: 0939 344099</p>
+                            <table class="nhaptt">
+                                <tr>
+                                    <td>Ten</td>
+                                    <td>
+                                        <input type="text" value="CƠM PHÚC KÝ" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Dia Chi</td>
+                                    <td>
+                                        <input type="text" value="376 CMT8, P.Bùi Hữu Nghĩa, Q.Bình Thủy, TP.Cần Thơ" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Phone</td>
+                                    <td>
+                                        <input type="text" value="Phone: 0939 344099" />
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                         <div class="col-xs-12 col-sm-5">
-                            <h5>THÔNG TIN</h5>
-                            <p>Facebook: Com Phuc Ky<br />Website: http://phucky.dnd.vn</p>
+                            <table class="nhaptt">
+                                <tr>
+                                    <td></td>
+                                    <td><h5 style="margin-bottom:0px">THÔNG TIN:</h5></td>
+                                </tr>
+                                <tr>
+                                    <td>Facebook:</td>
+                                    <td>
+                                        <input type="text" value="Com Phuc Ky" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Website:</td>
+                                    <td>
+                                        <input type="text" value="http://phucky.dnd.vn" />
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                         <div class="col-xs-12 col-sm-3">
-                            <a href="javascript:void(0)"> <img width="70px" src="imgs/logo.png" alt="Footer logo"> </a> <span style="font-weight:bold">CƠM HỘP ONLINE</span>
+                            <table class="nhaptt">
+                                <tr>
+                                    <td>LOGO:<br /><button>+</button></td>
+                                    <td>
+                                        <img src="imgs/logo1.png" alt="Footer logo">
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
+                    </div>
+                    <div class="row" style="text-align: center;padding: 20px;">
+                        <button>Save</button>
+                        <button>Cancel</button>
                     </div>
                 </div>
             </div>
         </footer>
-    </section>
+    </div>
+    <div class="home" style="display:none">
 
+
+        <div class="menucontainer">
+            <input type="checkbox" id="toggle" />
+            <label class="menubtt" for="toggle"></label>
+            <menunav class="menunav">
+                <a href="http://sashatran.com" target="_blank">About</a>
+                <a href="https://codepen.io/sashatran/pens/public/" target="_blank">Home</a>
+                <a href="https://www.linkedin.com/in/sasha-tran-23498989/" target="_blank">Hire Me</a>
+                <a href="https://www.youtube.com/channel/UCCATAa8MWoBuH-sR_Jlx29A" target="_blank">Subscribe</a>
+            </menunav>
+        </div>
+
+
+        <div class="loading srcfade">
+            <div style="display:none" class="col-xs-12 col-sm-12 col-md-6 col-lg-4 food-item">
+                <div class="food-item-wrap">
+                    <div class="figure-wrap bg-image">
+                        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                        <!--<div class="distance"><i class="fa fa-pin"></i>1240m</div>
+                        <div class="review pull-right"><a href="#">198 reviews</a> </div>-->
+                    </div>
+                    <div class="content">
+                        <h5><a href="javascript:void(0)"></a></h5>
+                        <div class="product-name">Cơm hộp - Cơm trưa văn phòng</div>
+                        <div class="price-btn-block"></div>
+                    </div>
+                </div>
+            </div>
+            <span>Loading ...</span>
+        </div>
+        <div id="sticky" class="widget clearfix stick" style="display:none">
+            <div class="widget-heading">
+                <button type="button" class="btn btn-danger" onclick="args.cb('BACK');">THOÁT</button>
+                <select id="selPRICE" class="custom-select pull-right">
+                    <option value="0" selected="">(Tất cả )</option>
+                    <option value="25.000đ">Giá 25 K</option>
+                    <option value="35.000đ">Giá 35 K</option>
+                </select>
+                <span style="color: black;line-height: 38px;padding-right: 10px;float:right">
+                    Chọn theo giá:
+                </span>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <section class="gl-page-content-section noselect">
+            <div class="container-fluid">
+                <div id="map-result-section" class="map-result-wrapper">
+                    <div class="search-result-wrapper">
+                    </div>
+                </div>
+            </div>
+            <footer class="footer" style="display:none">
+                <div class="container">
+                    <div class="bottom-footer">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4">
+                                <h5>CƠM PHÚC KÝ</h5>
+                                <p>376 CMT8, P.Bùi Hữu Nghĩa, Q.Bình Thủy, TP.Cần Thơ<br />Phone: 0939 344099</p>
+                            </div>
+                            <div class="col-xs-12 col-sm-5">
+                                <h5>THÔNG TIN</h5>
+                                <p>Facebook: Com Phuc Ky<br />Website: http://phucky.dnd.vn</p>
+                            </div>
+                            <div class="col-xs-12 col-sm-3">
+                                <a href="javascript:void(0)"> <img width="70px" src="imgs/logo.png" alt="Footer logo"> </a> <span style="font-weight:bold">CƠM HỘP ONLINE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </section>
+    </div>
     <script type="text/javascript">
         Node.prototype.hasClass = function (e) { return this.classList ? this.classList.contains(e) : -1 < this.className.indexOf(e) }, Node.prototype.addClass = function (e) { if (this.classList) this.classList.add(e); else if (!this.hasClass(e)) { var t = this.className.split(" "); t.push(e), this.className = t.join(" ") } return this }, Node.prototype.removeClass = function (e) { if (this.classList) this.classList.remove(e); else { var t = this.className.split(" "); t.splice(t.indexOf(e), 1), this.className = t.join(" ") } return this }; var jscss_addin, filesadded = ""; function loadjscssfile(e, t, s) { if ("js" == t) (i = document.createElement("script")).setAttribute("type", "text/javascript"), i.setAttribute("src", e); else if ("css" == t) { var i; (i = document.createElement("link")).setAttribute("rel", "stylesheet"), i.setAttribute("type", "text/css"), i.setAttribute("href", e) } void 0 !== i && (s && (i.onload = s), document.getElementsByTagName("head")[0].appendChild(i)) } function checkloadjscssfile(e, t, s) { -1 == filesadded.indexOf("[" + e + "]") ? (loadjscssfile(e, t, s), filesadded += "[" + e + "]") : s && s() } function removejscssfile(e, t) { for (var s = 0, i = "js" == t ? "script" : "css" == t ? "link" : "none", a = "js" == t ? "src" : "css" == t ? "href" : "none", n = document.getElementsByTagName(i), c = n.length; c >= 0; c--) n[c] && null != n[c].getAttribute(a) && -1 != n[c].getAttribute(a).indexOf(e) && (n[c].parentNode.removeChild(n[c]), s += 1); s > 0 && alert("Removed " + s + " instances of " + e) } function createjscssfile(e, t) { if ("js" == t) { var s = document.createElement("script"); s.setAttribute("type", "text/javascript"), s.setAttribute("src", e) } else "css" == t && ((s = document.createElement("link")).setAttribute("rel", "stylesheet"), s.setAttribute("type", "text/css"), s.setAttribute("href", e)); return s } function replacejscssfile(e, t, s) { for (var i = 0, a = "js" == s ? "script" : "css" == s ? "link" : "none", n = "js" == s ? "src" : "css" == s ? "href" : "none", c = document.getElementsByTagName(a), r = c.length; r >= 0; r--) if (c[r] && null != c[r].getAttribute(n) && -1 != c[r].getAttribute(n).indexOf(e)) { var l = createjscssfile(t, s); c[r].parentNode.replaceChild(l, c[r]), i += 1 } i > 0 && alert("Replaced " + i + " instances of " + e + " with " + t) };
         var args, $q = 'querySelector', $evt = 'addEventListener', sticky = document.getElementById('sticky'), anchor = sticky.previousElementSibling, frmD, itemp, defered = 2, dongcua, baseURI = location.protocol + '//' + location.host;
