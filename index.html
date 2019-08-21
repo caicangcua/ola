@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, minimum-scale=1, maximum-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="#">
+    <link rel="shortcut icon" href="imgs/favicon.ico" />
     <title>olala ship</title><!--http://codenpixel.com/demo/foodpicky/food_results.html#-->
     <style type="text/css">
         .loading{text-transform:uppercase;width:150px;text-align:center;line-height:50px;position:absolute;left:0;right:0;top:45%;margin:auto;z-index:99999999999}.loading span{position:relative;z-index:999;color:#fff}.loading:before{content:'';background:#61bdb6;width:128px;height:36px;display:block;position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;animation:2s loadingBefore infinite ease-in-out}@keyframes loadingBefore{0%{transform:translateX(-14px)}50%{transform:translateX(14px)}100%{transform:translateX(-14px)}}.loading:after{content:'';background:#ff3600;width:14px;height:60px;display:block;position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;opacity:.5;animation:2s loadingAfter infinite ease-in-out}@keyframes loadingAfter{0%{transform:translateX(-50px)}50%{transform:translateX(50px)}100%{transform:translateX(-50px)}}
@@ -110,13 +110,14 @@
 
     <style>
 
-        button {
+        .cmdbtn {
             border: none;
             cursor: pointer;
             font-family: 'Lato', sans-serif;
+            display:inline-block;
         }
 
-            button:focus {
+            .cmdbtn:focus {
                 outline-style: none;
             }
 
@@ -168,7 +169,7 @@
             text-align: center;
         }
 
-            #dialog-actions button {
+            #dialog-actions .cmdbtn {
                 margin-right: 1em;
                 border: 2px solid #000;
                 background: #fff;
@@ -177,18 +178,19 @@
                 font-weight: bold;
                 text-transform: uppercase;
             }
+            #dialog-actions .cmdbtn:last-child {
+                margin-right:0px;
+            }
     </style>
 </head>
 
 <body class="home" translate="no">
-
-    <p><a href="#dialog" class="btn confirm">Delete</a></p>
     <div id="dialog">
         <div id="dialog-content">
             <div id="dialog-text">Are you sure?</div>
             <div id="dialog-actions">
-                <button type="button" id="dialog-ok">OK</button>
-                <button type="button" id="dialog-cancel">Cancel</button>
+                <div class="cmdbtn" id="dialog-ok">OK</div>
+                <div  class="cmdbtn" id="dialog-cancel">Cancel</div>
             </div>
         </div>
     </div>
@@ -242,7 +244,7 @@
                         <div class="col-xs-12 col-sm-3">
                             <table class="nhaptt">
                                 <tr>
-                                    <td>LOGO:<br /><button>+</button></td>
+                                    <td>LOGO:<br /><button class="btn">+</button></td>
                                     <td>
                                         <img src="imgs/logo1.png" alt="Footer logo">
                                     </td>
@@ -251,8 +253,8 @@
                         </div>
                     </div>
                     <div class="row" style="text-align: center;padding: 20px;">
-                        <button>Save</button>
-                        <button>Cancel</button>
+                        <button class="btn">Save</button>
+                        <button class="btn">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -265,7 +267,7 @@
             <input type="checkbox" id="toggle" />
             <label class="menubtt" for="toggle"></label>
             <menunav class="menunav">
-                <a href="http://sashatran.com" target="_blank">About</a>
+                <a href="#dialog">Dialog</a>
                 <a href="https://codepen.io/sashatran/pens/public/" target="_blank">Home</a>
                 <a href="https://www.linkedin.com/in/sasha-tran-23498989/" target="_blank">Hire Me</a>
                 <a href="https://www.youtube.com/channel/UCCATAa8MWoBuH-sR_Jlx29A" target="_blank">Subscribe</a>
