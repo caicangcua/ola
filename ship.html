@@ -35,7 +35,14 @@
         .phone {
             position: absolute;
             width: 100%;
-            height: 100%;
+            height:100%;
+        }
+
+        .mapsec {
+             position: absolute;
+              height:calc( 100vh - 200px);
+                  width: 100%;
+    top: 200px;
         }
 
         @media (max-width: 480px) {
@@ -1195,7 +1202,9 @@
     <div class="phone">
         <div class="phone__screen" ng-app="delivcard">
             <div class="phone__scroll-cont">
-                <ion-app id="gmap"></ion-app>
+                <div class="mapsec">
+                    <ion-app id="gmap"></ion-app>
+                </div>
 
 
                 <div class="phone__content" ng-controller="DelivCtrl">
@@ -1347,8 +1356,6 @@
             </div>
         </div>
     </div>
-
-
 
 
 
