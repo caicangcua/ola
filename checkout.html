@@ -1,0 +1,1759 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
+    <!--<link rel="manifest" href="manifest.json">-->
+    <meta name="theme-color" content="#4e8ef7">
+    <script src="build/socket.io.js"></script>
+    <script src="http://maps.google.com/maps/api/js?libraries=geometry&key=AIzaSyCMdf6TDCq5n5Rsf0sTPRm-okq7NlM4RBk"></script>
+    <link href="build/main.css" rel="stylesheet">
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Varela+Round);
+
+        :root {
+            font-size: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-weight: 400;
+        }
+
+        h1, h2, h3 {
+            padding: 0;
+            margin: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            float: left;
+        }
+
+        body {
+            background: #fff;
+            font-family: 'Varela Round', Helvetica, sans-serif;
+            color: #B3D2FA;
+        }
+
+        .product-viewer {
+            /*width: 478px;
+            height: 478px;
+            position: absolute;*/
+            background: #B3D2FA;
+            height:100vh;
+            /*top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            padding: 30px;*/
+            /*box-shadow: 0 70px 90px rgba(0, 0, 0, 0.1), 0 100px 100px rgba(0, 0, 0, 0.05);*/
+        }
+
+            .product-viewer header {
+                /*float: left;*/
+                width: 100%;
+                height: 66px;
+                /*margin-bottom: 30px;*/
+                            box-shadow: 0 2px 15px rgba(0, 0, 0, .5);
+                                z-index: 1;
+    position: relative;
+            }
+
+                .product-viewer header a {
+                    color: #fff;
+                    text-decoration: none;
+                }
+
+                .product-viewer header > a {
+                    text-transform: uppercase;
+                    line-height: 36px;
+                    font-weight: 600;
+                    font-size: 14px;
+                }
+
+                .product-viewer header ul {
+                    float: right;
+                    padding: 0;
+                    margin: 0;
+                    width: 314px;
+                    border-radius: 40px;
+                    background: #fff;
+                    height: 36px;
+                }
+
+                    .product-viewer header ul li {
+                        display: inline-block;
+                        width: 32%;
+                        padding: 0;
+                        margin: 0;
+                        text-align: center;
+                        line-height: 36px;
+                    }
+
+                        .product-viewer header ul li a {
+                            color: #6B6B6B;
+                            font-size: 14px;
+                        }
+
+                        .product-viewer header ul li:hover a {
+                            color: #8dbbf7;
+                            font-weight: bold;
+                        }
+
+        .product-viewer_content {
+            /*float: left;
+            height: 430px;*/
+            height: calc( 100vh - 66px);
+            margin: auto;
+            background: #fff;
+            box-shadow: 0 10px 100px rgba(0, 0, 0, 0.2), 0 100px 100px rgba(0, 0, 0, 0.03);
+            /*width: calc( 478px - 60px);*/
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-slider {
+            /*float: left;*/
+            height: 430px;
+            margin: auto;
+            background: #fff;
+            /*width: calc( (478px*3 - 60px) );*/
+            transition: -webkit-transform .35s ease;
+            transition: transform .35s ease;
+            transition: transform .35s ease, -webkit-transform .35s ease;
+        }
+
+            .content-slider.slide-1-active {
+                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+            }
+
+            .content-slider.slide-2-active {
+                -webkit-transform: translate3d(-418px, 0, 0);
+                transform: translate3d(-418px, 0, 0);
+            }
+
+            .content-slider.slide-3-active {
+                -webkit-transform: translate3d(-836px, 0, 0);
+                transform: translate3d(-836px, 0, 0);
+            }
+
+            .content-slider .slider-item {
+                width: 420px;
+                height: 100%;
+                position: relative;
+                float: left;
+                text-align: center;
+            }
+
+                .content-slider .slider-item figcaption span {
+                    width: 100%;
+                    float: left;
+                    text-align: center;
+                }
+
+                .content-slider .slider-item .desc {
+                    color: #C4C4C4;
+                    margin-bottom: 4px;
+                    font-size: 12px;
+                    text-transform: uppercase;
+                }
+
+                    .content-slider .slider-item .desc h3 {
+                        font-weight: bold;
+                    }
+
+                .content-slider .slider-item .name {
+                    font-size: 15px;
+                    color: #000;
+                    margin-bottom: 12px;
+                }
+
+                    .content-slider .slider-item .name h2 {
+                        text-transform: uppercase;
+                        font-weight: bold;
+                    }
+
+                .content-slider .slider-item span.price {
+                    font-weight: bold;
+                }
+
+                .content-slider .slider-item img {
+                    width: 100%;
+                }
+
+        .control-slider {
+            float: left;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            height: 70px;
+            text-align: center;
+        }
+
+            .control-slider ul {
+                padding: 0;
+                margin: 0;
+                list-style: none;
+            }
+
+                .control-slider ul li {
+                    display: inline-block;
+                    margin: 0 5px;
+                }
+
+                .control-slider ul a {
+                    text-decoration: none;
+                    display: block;
+                    width: 10px;
+                    height: 10px;
+                    margin-top: 35px;
+                    line-height: 70px;
+                    border-radius: 100%;
+                    background: #C4C4C4;
+                }
+
+                .control-slider ul li.active a {
+                    background: #B3D2FA;
+                }
+    </style>
+
+    <style>
+
+        .food {
+            position: relative;
+            height: calc( 100vh - 66px);
+            background: #FFF;
+            border-radius: 2px;
+
+        }
+
+            .food > .cover {
+                position: relative;
+                height: calc( 100vh - 200px);
+                background: transparent center no-repeat;
+                background-size: 100% auto;
+                border-radius: 2px 2px 0 0;
+            }
+
+                .food > .cover > label {
+                    position: absolute;
+                    top: 22px;
+                    left: -33px;
+                    height: 33px;
+                    padding: 0 30px 0 63px;
+                    line-height: 33px;
+                    vertical-align: middle;
+                    font-family: sans-serif;
+                    font-size: 13px;
+                    text-transform: uppercase;
+                    color: #FFF;
+                    text-shadow: 0 1px 2px #000;
+                    background: rgba(136, 86, 168, .6);
+                }
+
+                    .food > .cover > label > i {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                    }
+
+                        .food > .cover > label > i > svg {
+                            margin: 8px;
+                        }
+
+                .food > .cover > .download {
+                    display: block;
+                    position: absolute;
+                    bottom: 20px;
+                    right: 20px;
+                    width: 47px;
+                    height: 47px;
+                    background: rgba(51, 193, 210, .6);
+                    border-radius: 100%;
+                }
+
+                    .food > .cover > .download:hover {
+                        background: #33C1D2;
+                    }
+
+                    .food > .cover > .download > svg {
+                        margin: 12px 10px 0;
+                    }
+
+            .food > .info {
+                position: relative;
+                height: 134px;
+                overflow: hidden;
+                border-radius: 0 0 2px 2px;
+                box-shadow:0 2px 15px rgba(0, 0, 0, .5);
+            }
+
+                .food > .info > .recipe {
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 134px;
+                    height: 134px;
+                    background: #8856A8;
+                    font-family: sans-serif;
+                    font-size: 14px;
+                    color: #FFF;
+                    text-transform: uppercase;
+                    text-decoration: none;
+                    text-align: center;
+                    border-radius: 0 0 0 2px;
+                }
+
+                    .food > .info > .recipe:hover {
+                        background: #9967B9;
+                    }
+
+                    .food > .info > .recipe > i {
+                        display: block;
+                        margin: 38px 0 15px;
+                    }
+
+                .food > .info > .content {
+                    position: absolute;
+                    top: 20px;
+                    right: 20px;
+                    bottom: 20px;
+                    left: 154px;
+                    font-family: sans-serif;
+                    font-size: 14px;
+                    color: #888;
+                }
+
+                    .food > .info > .content strong {
+                        font-weight: normal;
+                        color: #333;
+                    }
+
+                    .food > .info > .content .pad-right {
+                        padding-right: 20px;
+                    }
+
+                    .food > .info > .content .border-right {
+                        border-right: 1px solid #D9D9D9;
+                    }
+
+                    .food > .info > .content .consumers img, .food > .info > .content .consumers span {
+                        display: inline-block;
+                        width: 32px;
+                        height: 32px;
+                        margin: 0 2px 0 0;
+                        line-height: 32px;
+                        vertical-align: middle;
+                        border-radius: 100%;
+                    }
+
+                    .food > .info > .content .consumers span {
+                        margin: 0;
+                    }
+
+                    .food > .info > .content h1 {
+                        margin: 0 0 10px;
+                        font-size: 26px;
+                        font-weight: normal;
+                        color: #333;
+                    }
+
+                    .food > .info > .content .stars, .food > .info > .content .stars > em {
+                        display: block;
+                        width: 99px;
+                        height: 18px;
+                        margin: 0 auto 7px;
+                        text-align: left;
+                        background: url(https://lh5.googleusercontent.com/uJ_7fIpfUO1hsXDfSXIcwBkJg4h3pYcZtTP5H5bD52wRgOhgPBpIMHOvvNntyHCTOCs9lYY1yuEX-p8EW20-=w2560-h2688);
+                    }
+
+                        .food > .info > .content .stars > em {
+                            width: 99px;
+                            height: 18px;
+                            margin: 0;
+                            background: url(https://lh5.googleusercontent.com/uJ_7fIpfUO1hsXDfSXIcwBkJg4h3pYcZtTP5H5bD52wRgOhgPBpIMHOvvNntyHCTOCs9lYY1yuEX-p8EW20-=w2560-h2688);
+                            background-position: 0 -18px;
+                        }
+    </style>
+
+</head>
+<body>
+    <!-- Ionic's root component and where the app will load -->
+
+    <div class="product-viewer">
+
+
+
+        <header>
+            <a href="#">add to</a>
+
+            <ul class="menu">
+                <li><a href="">Checkout</a></li>
+                <li><a href="">Favorite</a></li>
+                <li><a href="">Collection</a></li>
+            </ul>
+        </header>
+        <div class="food">
+            <div class="cover">
+                <ion-app id="gmap"></ion-app>
+                <label>
+                    <i>
+                        <svg x="0px" y="0px" width="17px" height="17px">
+                            <g>
+                                <path d="M 7 1 C 7 1.5523 7.6716 2 8.5 2 C 9.3284 2 10 1.5523 10 1 C 10 0.4477 9.3284 0 8.5 0 C 7.6716 0 7 0.4477 7 1 ZM 7 2 C 7 2 0.6875 2.9375 0 7 C 0 7 -0.1875 9.6875 3 11 C 3 11 4.6875 10.9375 6 9 C 6 9 8.3125 12.8125 11 9 C 11 9 12.1875 10.875 14 11 C 14 11 16.75 10.0625 17 7 C 17 7 16.375 3 10.0625 1.9375 C 10.0625 1.9375 8.5 4.25 7 2 ZM 1 11 L 3 17 L 14 17 L 16 11 C 16 11 13.125 13 11 11 C 11 11 8.875 13.375 6 11 C 6 11 3 13.125 1 11 Z" fill="#ffffff"></path>
+                            </g>
+                        </svg>
+                    </i>
+                    <font>Macarons</font>
+                </label>
+                <a href="#" class="download">
+                    <svg x="0px" y="0px" width="27px" height="22px">
+                        <g>
+                            <path d="M 12.5625 0 C 12.0102 0 11.5625 0.4477 11.5625 1 L 11.565 8.69 L 9.0625 8.6875 L 12 16 L 14 16 L 17.0625 8.6875 L 14.5 8.69 L 14.5 1 C 14.5 0.4477 14.0523 0 13.5 0 L 12.5625 0 ZM 1 19 L 1 14 L 0 14 L 0 19 C 0 20.6569 1.3431 22 3 22 L 24 22 C 25.6569 22 27 20.6569 27 19 L 27 14 L 26 14 L 26 19 C 26 20.1046 25.1046 21 24 21 L 3 21 C 1.8954 21 1 20.1046 1 19 Z" fill="#ffffff"></path>
+                        </g>
+                    </svg>
+                </a>
+            </div>
+            <div class="info">
+                <a href="#" class="recipe">
+                    <i>
+                        <svg x="0px" y="0px" width="26px" height="28px">
+                            <g>
+                                <path d="M 8.5 20 L 8.5 21 L 17.5 21 L 17.5 20 L 8.5 20 ZM 8.5 16 L 8.5 17 L 17.5 17 L 17.5 16 L 8.5 16 ZM 8.5 12 L 8.5 13 L 17.5 13 L 17.5 12 L 8.5 12 ZM 20 0 C 19.4477 0 19 0.4477 19 1 L 19 6 C 19 6.5523 19.4477 7 20 7 C 20.5523 7 21 6.5523 21 6 L 21 1 C 21 0.4477 20.5523 0 20 0 ZM 13 0 C 12.4477 0 12 0.4477 12 1 L 12 6 C 12 6.5523 12.4477 7 13 7 C 13.5523 7 14 6.5523 14 6 L 14 1 C 14 0.4477 13.5523 0 13 0 ZM 6 0 C 5.4477 0 5 0.4477 5 1 L 5 6 C 5 6.5523 5.4477 7 6 7 C 6.5523 7 7 6.5523 7 6 L 7 1 C 7 0.4477 6.5523 0 6 0 ZM 15 4 L 18 4 L 18 3 L 15 3 L 15 4 ZM 8 4 L 11 4 L 11 3 L 8 3 L 8 4 ZM 3 4 L 4 4 L 4 3 L 3 3 C 1.3431 3 0 4.3431 0 6 L 0 25 C 0 26.6569 1.3431 28 3 28 L 23 28 C 24.6569 28 26 26.6569 26 25 L 26 6 C 26 4.3431 24.6569 3 23 3 L 22 3 L 22 4 L 23 4 C 24.1046 4 25 4.8954 25 6 L 25 25 C 25 26.1046 24.1046 27 23 27 L 3 27 C 1.8954 27 1 26.1046 1 25 L 1 6 C 1 4.8954 1.8954 4 3 4 Z" fill="#ffffff"></path>
+                            </g>
+                        </svg>
+                    </i>
+                    <font>Details</font>
+                </a>
+                <div class="content">
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td align="left" valign="middle" class="pad-right"><strong>Ingredients:</strong></td>
+                                <td align="left" valign="middle">sugar, egg whites, butter, salt cappuccino, cinnamon.</td>
+                                <td width="20" rowspan="2" class="border-right">&nbsp;</td>
+                                <td width="140" rowspan="2" align="center" valign="middle">
+                                    <h1>9.75</h1>
+                                    <span class="stars">
+                                        <em style="width: 91%;"></em>
+                                    </span><br>
+                                    <small>(320 ratings)</small>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" valign="middle" class="pad-right"><strong>Consumers:</strong></td>
+                                <td align="left" valign="middle" class="consumers">
+                                    <img src="https://tinyfac.es/data/avatars/852EC6E1-347C-4187-9D42-DF264CCF17BF-200w.jpeg">
+                                    <img src="https://tinyfac.es/data/avatars/5F8C5D50-DDB6-4F06-AA15-ACB30D8D910D-200w.jpeg">
+                                    <img src="https://tinyfac.es/data/avatars/A7299C8E-CEFC-47D9-939A-3C8CA0EA4D13-200w.jpeg">
+                                    <img src="https://tinyfac.es/data/avatars/AEF44435-B547-4B84-A2AE-887DFAEE6DDF-200w.jpeg">
+                                    <span>(+20)</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- The polyfills js is generated during the build process -->
+    <script src="build/polyfills.js"></script>
+
+    <!--<script src="build/vendor.js"></script>-->
+    <!-- The bundle js is generated during the build process -->
+    <script type="text/javascript">
+
+        var SETTINGS = [
+            { name: 'geofenceRadius', defaultValue: 200 },
+            { name: 'geofenceNotifyOnEntry', defaultValue: true },
+            { name: 'geofenceNotifyOnExit', defaultValue: false },
+            { name: 'geofenceNotifyOnDwell', defaultValue: false },
+            { name: 'geofenceLoiteringDelay', defaultValue: 30000 },
+            { name: 'mapHideMarkers', defaultValue: false },
+            { name: 'mapHidePolyline', defaultValue: false },
+            { name: 'mapShowGeofenceHits', defaultValue: false },
+            { name: 'email', defaultValue: null }
+        ];
+        var GEOFENCE_RADIUS_OPTIONS = [50, 100, 150, 200, 500, 1000];
+        var GEOFENCE_LOITERING_DELAY_OPTIONS = [1 * 1000, 10 * 1000, 30 * 1000, 60 * 1000, 5 * 60 * 1000];
+        var SettingsService = (function () {
+            function SettingsService(events, alertCtrl, toastCtrl) {
+                var _this = this;
+                this.events = events;
+                this.alertCtrl = alertCtrl;
+                this.toastCtrl = toastCtrl;
+                this.storage = window.localStorage;
+                this.geofenceRadiusOptions = GEOFENCE_RADIUS_OPTIONS;
+                this.geofenceLoiteringDelayOptions = GEOFENCE_LOITERING_DELAY_OPTIONS;
+                this.state = {};
+                if (this.storage.hasOwnProperty('settings')) {
+                    this.loadState();
+                }
+                else {
+                    SETTINGS.forEach(function (setting) {
+                        _this.state[setting.name] = setting.defaultValue;
+                    });
+                    this.saveState();
+                }
+            }
+            SettingsService.prototype.getSettings = function () {
+                return this.state;
+            };
+            SettingsService.prototype.onChange = function (name) {
+                if (this.myState[name] === this.state[name]) {
+                    return;
+                }
+                this.saveState();
+                this.events.publish('change', name, this.state[name]);
+            };
+            SettingsService.prototype.set = function (name, value) {
+                if (!this.state.hasOwnProperty(name)) {
+                    console.warn("SettingsService#set: Unknown property ", name);
+                    return;
+                }
+                if (this.myState[name] === value) {
+                    return;
+                }
+                this.state[name] = value;
+                this.saveState();
+                this.events.publish('change', name, value);
+            };
+            SettingsService.prototype.get = function (name) {
+                if (this.state.hasOwnProperty(name)) {
+                    return this.state[name];
+                }
+                else {
+                    return null;
+                }
+            };
+            SettingsService.prototype.toast = function (message, result, duration) {
+                if (typeof (result) !== undefined) {
+                    message = message.replace("\{result\}", result);
+                }
+                this.toastCtrl.create({
+                    message: message,
+                    duration: duration || 3000
+                }).present();
+            };
+            SettingsService.prototype.confirm = function (title, message, callback) {
+                var alert = this.alertCtrl.create({
+                    title: title,
+                    message: message,
+                    buttons: [{
+                        text: 'Cancel',
+                        role: 'cancel',
+                        handler: function () {
+                            alert.dismiss();
+                        }
+                    }, {
+                        text: 'Confirm',
+                        handler: callback
+                    }]
+                });
+                alert.present();
+            };
+            /**
+            * Subscribe to BGService events
+            */
+            SettingsService.prototype.on = function (event, callback) {
+                this.events.subscribe(event, callback);
+            };
+            SettingsService.prototype.loadState = function () {
+                var _this = this;
+                this.state = JSON.parse(this.storage.getItem('settings'));
+                var invalid = false;
+                SETTINGS.forEach(function (setting) {
+                    if (!_this.state.hasOwnProperty(setting.name)) {
+                        _this.state[setting.name] = setting.defaultValue;
+                        invalid = true;
+                    }
+                });
+                if (!invalid) {
+                    this.saveState();
+                }
+                this.myState = Object.assign({}, this.state);
+            };
+            SettingsService.prototype.saveState = function () {
+                this.storage.setItem('settings', JSON.stringify(this.state, null));
+                this.myState = Object.assign({}, this.state);
+            };
+            return SettingsService;
+        }());
+
+        // Colors
+        var COLORS = {
+            gold: '#fedd1e',
+            white: "#fff",
+            blue: "#2677FF",
+            light_blue: "#3366cc",
+            polyline_color: "#00B3FD",
+            green: "#16BE42",
+            dark_purple: "#2A0A73",
+            grey: "#404040",
+            red: "#FE381E",
+            dark_red: "#A71300",
+            black: "#000"
+        };
+        // Icons
+        var ICON_MAP = {
+            activity_unknown: "help-circle",
+            activity_still: "body",
+            activity_shaking: "walk",
+            activity_on_foot: "walk",
+            activity_walking: "walk",
+            activity_running: "walk",
+            activity_on_bicycle: "bicycle",
+            activity_in_vehicle: "car",
+            pace_true: "pause",
+            pace_false: "play",
+            provider_network: "wifi",
+            provider_gps: "locate",
+            provider_disabled: "warning"
+        };
+        // Messages
+        var MESSAGE = {
+            reset_odometer_success: 'Reset odometer success',
+            reset_odometer_failure: 'Failed to reset odometer: {result}',
+            sync_success: 'Sync success ({result} records)',
+            sync_failure: 'Sync error: {result}',
+            destroy_locations_success: 'Destroy locations success ({result} records)',
+            destroy_locations_failure: 'Destroy locations error: {result}',
+            removing_markers: 'Removing markers...',
+            rendering_markers: 'Rendering markers...'
+        };
+        var HomePage = (function () {
+            function HomePage(platform, bgService, settingsService, zone, loadingCtrl, modalController) {
+                this.platform = platform;
+                this.bgService = bgService;
+                this.settingsService = settingsService;
+                this.zone = zone;
+                this.loadingCtrl = loadingCtrl;
+                this.modalController = modalController;
+                //this.bgService.on('change', this.onBackgroundGeolocationSettingsChanged.bind(this));
+                //this.bgService.on('start', this.onBackgroundGeolocationStarted.bind(this));
+                //this.settingsService.on('change', this.onSettingsChanged.bind(this));
+                this.isMainMenuOpen = false;
+                this.isMapMenuOpen = false;
+                this.isSyncing = false;
+                this.isResettingOdometer = false;
+                this.iconMap = ICON_MAP;
+                this.geofenceHits = [];
+                // Initial state
+                this.state = {
+                    enabled: false,
+                    isMoving: false,
+                    geofenceProximityRadius: 1000,
+                    trackingMode: 'location',
+                    paceIcon: this.iconMap['pace_false'],
+                    isChangingPace: false,
+                    activityIcon: this.iconMap['activity_unknown'],
+                    odometer: 0,
+                    provider: {
+                        gps: true,
+                        network: true,
+                        enabled: true,
+                        status: -1
+                    }
+                };
+            }
+            HomePage.prototype.ionViewDidLoad = function () {
+                var _this = this;
+                this.platform.ready().then(function () {
+                    _this.configureMap();
+                    _this.configureBackgroundGeolocation();
+                });
+            };
+            /**
+            * Configure Google Maps
+            */
+            HomePage.prototype.configureMap = function (mapElement) {
+                this.locationMarkers = [];
+                this.geofenceMarkers = [];
+                this.geofenceHitMarkers = [];
+                var latLng = new google.maps.LatLng(-34.9290, 138.6010);
+                var mapOptions = {
+                    center: latLng,
+                    zoom: 15,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    zoomControl: false,
+                    mapTypeControl: false,
+                    panControl: false,
+                    rotateControl: false,
+                    scaleControl: false,
+                    streetViewControl: false,
+                    disableDefaultUI: true
+                };
+                this.map = new google.maps.Map(mapElement, mapOptions);
+                // Create LongPress event-handler
+                //new __WEBPACK_IMPORTED_MODULE_6__lib_LongPress__["a" /* LongPress */](this.map, 500);
+                // Tap&hold detected.  Play a sound a draw a circular cursor.
+                google.maps.event.addListener(this.map, 'longpresshold', this.onLongPressStart.bind(this));
+                // Longpress cancelled.  Get rid of the circle cursor.
+                google.maps.event.addListener(this.map, 'longpresscancel', this.onLongPressCancel.bind(this));
+                // Longpress initiated, add the geofence
+                google.maps.event.addListener(this.map, 'longpress', this.onLongPress.bind(this));
+                // Blue current location marker
+                var iconx = {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 12,
+                    animation: google.maps.Animation.BOUNCE
+                };
+
+                this.currentLocationMarker = new google.maps.Marker({
+                    zIndex: 10,
+                    map: this.map,
+                    title: 'Current Location',
+                    //icon: iconx
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 12,
+                        fillColor: COLORS.blue,
+                        fillOpacity: 1,
+                        strokeColor: COLORS.white,
+                        strokeOpacity: 1,
+                        strokeWeight: 6
+                    }
+                });
+                // Light blue location accuracy circle
+                this.locationAccuracyCircle = new google.maps.Circle({
+                    map: this.map,
+                    zIndex: 9,
+                    fillColor: COLORS.light_blue,
+                    fillOpacity: 0.4,
+                    strokeOpacity: 0
+                });
+                // Stationary Geofence
+                this.stationaryRadiusCircle = new google.maps.Circle({
+                    zIndex: 0,
+                    fillColor: COLORS.red,
+                    strokeColor: COLORS.red,
+                    strokeWeight: 1,
+                    fillOpacity: 0.3,
+                    strokeOpacity: 0.7,
+                    map: this.map
+                });
+                // Route polyline
+                // Route polyline
+                var seq = {
+                    repeat: '30px',
+                    icon: {
+                        path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
+                        scale: 1,
+                        fillOpacity: 0,
+                        strokeColor: COLORS.white,
+                        strokeWeight: 1,
+                        strokeOpacity: 1
+                    }
+                };
+                this.polyline = new google.maps.Polyline({
+                    map: (this.settingsService.state.mapHidePolyline) ? null : this.map,
+                    zIndex: 1,
+                    geodesic: true,
+                    strokeColor: COLORS.polyline_color,
+                    strokeOpacity: 0.7,
+                    strokeWeight: 7,
+                    icons: [seq]
+                });
+                // Popup geofence cursor for adding geofences via LongPress
+                this.geofenceCursor = new google.maps.Marker({
+                    clickable: false,
+                    zIndex: 100,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 100,
+                        fillColor: COLORS.green,
+                        fillOpacity: 0.2,
+                        strokeColor: COLORS.green,
+                        strokeWeight: 1,
+                        strokeOpacity: 0.7
+                    }
+                });
+            };
+            /**
+            * Configure BackgroundGeolocation plugin
+            */
+            HomePage.prototype.configureBackgroundGeolocation = function () {
+                var _this = this;
+                var bgGeo = this.bgService.getPlugin();
+                // Listen to events
+                this.onLocation = this.onLocation.bind(this);
+                this.onLocationError = this.onLocationError.bind(this);
+                this.onMotionChange = this.onMotionChange.bind(this);
+                this.onHeartbeat = this.onHeartbeat.bind(this);
+                this.onGeofence = this.onGeofence.bind(this);
+                this.onActivityChange = this.onActivityChange.bind(this);
+                this.onProviderChange = this.onProviderChange.bind(this);
+                this.onGeofencesChange = this.onGeofencesChange.bind(this);
+                this.onSchedule = this.onSchedule.bind(this);
+                this.onHttpSuccess = this.onHttpSuccess.bind(this);
+                this.onHttpFailure = this.onHttpFailure.bind(this);
+                bgGeo.on('location', this.onLocation, this.onLocationError);
+                bgGeo.on('motionchange', this.onMotionChange);
+                bgGeo.on('heartbeat', this.onHeartbeat);
+                bgGeo.on('geofence', this.onGeofence);
+                bgGeo.on('activitychange', this.onActivityChange);
+                bgGeo.on('providerchange', this.onProviderChange);
+                bgGeo.on('geofenceschange', this.onGeofencesChange);
+                bgGeo.on('schedule', this.onSchedule);
+                bgGeo.on('http', this.onHttpSuccess, this.onHttpFailure);
+                // Fetch current settings from BGService
+                this.bgService.getState(function (config) {
+                    config.schedule = [];
+                    config.notificationLargeIcon = 'drawable/notification_large_icon';
+                    config.httpHeaders = { "Content-Type": "application/x-www-form-urlencoded" };
+
+                    bgGeo.configure(config, function (state) {
+                        _this.zone.run(function () {
+                            _this.state.enabled = config.enabled;
+                            _this.state.isMoving = config.isMoving;
+                            _this.state.geofenceProximityRadius = config.geofenceProximityRadius;
+                            _this.state.trackingMode = (state.trackingMode === 1 || state.trackingMode === 'location') ? 'location' : 'geofence';
+                            _this.state.paceIcon = _this.iconMap['pace_' + config.isMoving];
+                        });
+                        if (state.schedule.length > 0) {
+                            bgGeo.startSchedule();
+                        }
+                        console.log('[js] Confgure success');
+                    });
+                });
+            };
+            ////
+            // UI event handlers
+            //
+            HomePage.prototype.onClickMainMenu = function () {
+                this.isMainMenuOpen = !this.isMainMenuOpen;
+                if (this.isMainMenuOpen) {
+                    this.bgService.playSound('OPEN');
+                }
+                else {
+                    this.bgService.playSound('CLOSE');
+                }
+            };
+            HomePage.prototype.onClickSettings = function () {
+                this.bgService.playSound('OPEN');
+                var modal = this.modalController.create(__WEBPACK_IMPORTED_MODULE_2__settings_settings__["a" /* SettingsPage */], {});
+                modal.present();
+            };
+            HomePage.prototype.onClickSync = function () {
+                var _this = this;
+                this.bgService.playSound('BUTTON_CLICK');
+                function onComplete(message, result) {
+                    var _this = this;
+                    this.settingsService.toast(message, result);
+                    this.zone.run(function () { _this.isSyncing = false; });
+                }
+                ;
+                var bgGeo = this.bgService.getPlugin();
+                bgGeo.getCount(function (count) {
+                    var message = 'Sync ' + count + ' location' + ((count > 1) ? 's' : '') + '?';
+                    _this.settingsService.confirm('Confirm Sync', message, function () {
+                        _this.isSyncing = true;
+                        bgGeo.sync(function (rs, taskId) {
+                            _this.bgService.playSound('MESSAGE_SENT');
+                            bgGeo.finish(taskId);
+                            onComplete.call(_this, MESSAGE.sync_success, count);
+                        }, function (error) {
+                            onComplete.call(_this, MESSAGE.sync_failure, error);
+                        });
+                    });
+                });
+            };
+            HomePage.prototype.onClickDestroyLocations = function () {
+                var _this = this;
+                this.bgService.playSound('BUTTON_CLICK');
+                var zone = this.zone;
+                var settingsService = this.settingsService;
+                function onComplete(message, result) {
+                    var _this = this;
+                    settingsService.toast(message, result);
+                    zone.run(function () { _this.isDestroyingLocations = false; });
+                }
+                ;
+                var bgGeo = this.bgService.getPlugin();
+                bgGeo.getCount(function (count) {
+                    if (!count) {
+                        _this.settingsService.toast('Locations database is empty');
+                        return;
+                    }
+                    // Confirm destroy
+                    var message = 'Destroy ' + count + ' location' + ((count > 1) ? 's' : '') + '?';
+                    _this.settingsService.confirm('Confirm Delete', message, function () {
+                        // Good to go...
+                        _this.isDestroyingLocations = true;
+                        bgGeo.destroyLocations(function (res) {
+                            onComplete.call(_this, MESSAGE.destroy_locations_success, count);
+                        }, function (error) {
+                            onComplete.call(this, MESSAGE.destroy_locations_failure, error);
+                        });
+                    });
+                });
+            };
+            HomePage.prototype.onClickEmailLogs = function () {
+                this.bgService.playSound('BUTTON_CLICK');
+                var storage = window.localStorage;
+                var email = storage.getItem('settings:email');
+                if (!email) {
+                    this.settingsService.toast('Please enter an email address in the Settings screen');
+                    return;
+                }
+                var bgGeo = this.bgService.getPlugin();
+                bgGeo.emailLog(email, function () {
+                    bgGeo.destroyLog();
+                });
+            };
+            HomePage.prototype.onClickResetOdometer = function () {
+                var _this = this;
+                this.state.odometer = '0.0';
+                this.bgService.playSound('BUTTON_CLICK');
+                var bgGeo = this.bgService.getPlugin();
+                this.isResettingOdometer = true;
+                this.resetMarkers();
+                var zone = this.zone;
+                var settingsService = this.settingsService;
+                function onComplete(message, result) {
+                    var _this = this;
+                    settingsService.toast(message, result);
+                    zone.run(function () { _this.isResettingOdometer = false; });
+                }
+                ;
+                bgGeo.resetOdometer(function (location) {
+                    onComplete.call(_this, MESSAGE.reset_odometer_success);
+                }, function (error) {
+                    onComplete.call(_this, MESSAGE.reset_odometer_failure, error);
+                });
+            };
+            HomePage.prototype.onClickMapMenu = function () {
+                this.isMapMenuOpen = !this.isMapMenuOpen;
+                var soundId = (this.isMapMenuOpen) ? 'OPEN' : 'CLOSE';
+                this.bgService.playSound(soundId);
+            };
+            HomePage.prototype.onSelectMapOption = function (name) {
+                this.bgService.playSound('BUTTON_CLICK');
+                this.settingsService.state[name] = !this.settingsService.state[name];
+                this.settingsService.set(name, this.settingsService.state[name]);
+            };
+            HomePage.prototype.onToggleEnabled = function () {
+                this.bgService.playSound('BUTTON_CLICK');
+                var bgGeo = this.bgService.getPlugin();
+                if (this.state.enabled) {
+                    if (this.bgService.isLocationTrackingMode()) {
+                        bgGeo.start(function () {
+                            console.warn('[js] START SUCCESS');
+                        }, function (error) {
+                            console.error('[js] START FAILURE: ', error);
+                        });
+                    }
+                    else {
+                        bgGeo.startGeofences();
+                    }
+                }
+                else {
+                    this.state.paceIcon = this.iconMap['pace_false'];
+                    this.state.isMoving = false;
+                    bgGeo.stop();
+                    this.clearMarkers();
+                }
+            };
+            HomePage.prototype.onClickGetCurrentPosition = function () {
+                this.bgService.playSound('BUTTON_CLICK');
+                var bgGeo = this.bgService.getPlugin();
+                bgGeo.getCurrentPosition(function (location, taskId) {
+                    console.log('- getCurrentPosition sample: ', location.sample, location.uuid);
+                    console.log('[js] getCurrentPosition: ', location);
+                    bgGeo.finish(taskId);
+                }, function (error) {
+                    console.warn('[js] getCurrentPosition FAILURE: ', error);
+                }, {
+                    maximumAge: 1000,
+                    desiredAccuracy: 10
+                });
+            };
+            HomePage.prototype.onClickChangePace = function () {
+                var _this = this;
+                if (!this.state.enabled) {
+                    return;
+                }
+                var zone = this.zone;
+                function onComplete() {
+                    var _this = this;
+                    zone.run(function () { _this.isChangingPace = false; });
+                }
+                this.bgService.playSound('BUTTON_CLICK');
+                var bgGeo = this.bgService.getPlugin();
+                this.state.isChangingPace = true;
+                this.state.isMoving = !this.state.isMoving;
+                this.state.paceIcon = this.iconMap['pace_' + this.state.isMoving];
+                bgGeo.changePace(this.state.isMoving, function () {
+                    onComplete.call(_this);
+                }, function (error) {
+                    onComplete.call(_this);
+                    alert('Failed to changePace');
+                });
+            };
+            ////
+            // Map events
+            //
+            HomePage.prototype.onLongPressStart = function (e) {
+                this.bgService.playSound('LONG_PRESS_ACTIVATE');
+                this.geofenceCursor.setPosition(e.latLng);
+                this.geofenceCursor.setMap(this.map);
+            };
+            HomePage.prototype.onLongPressCancel = function (e) {
+                this.bgService.playSound('LONG_PRESS_CANCEL');
+                this.geofenceCursor.setMap(null);
+            };
+            HomePage.prototype.onLongPress = function (e) {
+                var latlng = e.latLng;
+                this.geofenceCursor.setMap(null);
+                var modal = this.modalController.create(__WEBPACK_IMPORTED_MODULE_3__geofence_geofence__["a" /* GeofencePage */], {
+                    latitude: latlng.lat(),
+                    longitude: latlng.lng()
+                });
+                modal.present();
+            };
+            ////
+            // SettingsService listeners
+            //
+            HomePage.prototype.onSettingsChanged = function (name, value) {
+                var map = null;
+                switch (name) {
+                    case 'mapHideMarkers':
+                        var loader = this.loadingCtrl.create({
+                            content: (value) ? MESSAGE.removing_markers : MESSAGE.rendering_markers
+                        });
+                        loader.present();
+                        map = (value === true) ? null : this.map;
+                        this.locationMarkers.forEach(function (marker) {
+                            marker.setMap(map);
+                        });
+                        loader.dismiss();
+                        this.settingsService.toast((value) ? 'Hide location markers' : 'Show location markers', null, 1000);
+                        break;
+                    case 'mapHidePolyline':
+                        map = (value === true) ? null : this.map;
+                        this.polyline.setMap(map);
+                        this.settingsService.toast((value) ? 'Hide  polyline' : 'Show polyline', null, 1000);
+                        break;
+                    case 'mapShowGeofenceHits':
+                        map = (value === true) ? this.map : null;
+                        this.geofenceHitMarkers.forEach(function (marker) {
+                            marker.setMap(map);
+                        });
+                        this.settingsService.toast((value) ? 'Show geofence hits' : 'Hide geofence hits', null, 1000);
+                        break;
+                }
+            };
+            ////
+            // BgService listeners
+            //
+            HomePage.prototype.onBackgroundGeolocationSettingsChanged = function (name, value) {
+                console.log('Home settingschanged: ', name, value);
+                switch (name) {
+                    case 'geofenceProximityRadius':
+                        this.state.geofenceProximityRadius = value;
+                        this.stationaryRadiusCircle.setRadius(value / 2);
+                        break;
+                }
+            };
+            HomePage.prototype.onBackgroundGeolocationStarted = function (trackingMode, state) {
+                var _this = this;
+                this.zone.run(function () {
+                    _this.state.enabled = state.enabled;
+                    _this.state.isMoving = state.isMoving;
+                });
+            };
+            ////
+            // Background Geolocation event-listeners
+            //
+            HomePage.prototype.onLocation = function (location, taskId) {
+                var _this = this;
+                console.log('[js] location: ', location);
+                var bgGeo = this.bgService.getPlugin();
+                this.setCenter(location);
+                if (!location.sample) {
+                    this.zone.run(function () {
+                        // Convert meters -> km -> round nearest hundredth -> fix float xxx.x
+                        _this.state.odometer = parseFloat((Math.round((location.odometer / 1000) * 10) / 10).toString()).toFixed(1);
+                    });
+                }
+                bgGeo.finish(taskId);
+            };
+            HomePage.prototype.onLocationError = function (error) {
+                console.warn('[js] location error: ', error);
+            };
+            HomePage.prototype.onMotionChange = function (isMoving, location, taskId) {
+                var _this = this;
+                console.log('[js] motionchange: ', isMoving, location);
+                var bgGeo = this.bgService.getPlugin();
+                if (isMoving) {
+                    this.hideStationaryCircle();
+                }
+                else {
+                    this.showStationaryCircle(location);
+                }
+                this.zone.run(function () {
+                    _this.state.paceIcon = _this.iconMap['pace_' + isMoving];
+                    _this.state.isChangingPace = false;
+                    _this.state.isMoving = isMoving;
+                });
+                bgGeo.finish(taskId);
+            };
+            HomePage.prototype.onHeartbeat = function (event) {
+                console.log('[js] heartbeat', event);
+            };
+            HomePage.prototype.onActivityChange = function (event) {
+                var _this = this;
+                this.zone.run(function () {
+                    _this.state.activityName = event.activity;
+                    _this.state.activityIcon = _this.iconMap['activity_' + event.activity];
+                });
+                console.log('[js] activitychange: ', event.activity, event.confidence);
+            };
+            HomePage.prototype.onProviderChange = function (provider) {
+                var _this = this;
+                this.zone.run(function () { _this.state.provider = provider; });
+                console.log('[js] providerchange: ', provider);
+            };
+            HomePage.prototype.onGeofencesChange = function (event) {
+                var _this = this;
+                console.log('[js] geofenceschange: ', event);
+                // All geofences off
+                if (!event.on.length && !event.off.length) {
+                    this.geofenceMarkers.forEach(function (circle) {
+                        circle.setMap(null);
+                    });
+                    this.geofenceMarkers = [];
+                    return;
+                }
+                // Filter out all "off" geofences.
+                this.geofenceMarkers = this.geofenceMarkers.filter(function (circle) {
+                    if (event.off.indexOf(circle.identifier) < 0) {
+                        return true;
+                    }
+                    else {
+                        circle.setMap(null);
+                        return false;
+                    }
+                });
+                // Add new "on" geofences.
+                event.on.forEach(function (geofence) {
+                    var circle = _this.geofenceMarkers.find(function (marker) { return marker.identifier === geofence.identifier; });
+                    // Already added?
+                    if (circle) {
+                        return;
+                    }
+                    _this.geofenceMarkers.push(_this.buildGeofenceMarker(geofence));
+                });
+            };
+            HomePage.prototype.onGeofence = function (event) {
+                console.log('[js] geofence: ', event);
+                // DEBUG:
+                // Stop tracking on ENTER
+                // Start tracking on EXIT
+                /*
+                if (event.action === 'EXIT') {
+                  this.bgService.getPlugin().start();
+                } else if (event.action === 'ENTER') {
+                  this.bgService.getPlugin().startGeofences();
+                }
+                */
+                var circle = this.geofenceMarkers.find(function (marker) {
+                    return marker.identifier === event.identifier;
+                });
+                if (!circle) {
+                    return;
+                }
+                var map = (this.settingsService.state.mapShowGeofenceHits) ? this.map : null;
+                var location = event.location;
+                var geofence = this.geofenceHits[event.identifier];
+                if (!geofence) {
+                    geofence = {
+                        circle: new google.maps.Circle({
+                            zIndex: 100,
+                            fillOpacity: 0,
+                            strokeColor: COLORS.black,
+                            strokeWeight: 1,
+                            strokeOpacity: 1,
+                            radius: circle.getRadius() + 1,
+                            center: circle.getCenter(),
+                            map: map
+                        }),
+                        events: []
+                    };
+                    this.geofenceHits[event.identifier] = geofence;
+                    this.geofenceHitMarkers.push(geofence.circle);
+                }
+                var color;
+                if (event.action === 'ENTER') {
+                    color = COLORS.green;
+                }
+                else if (event.action === 'DWELL') {
+                    color = COLORS.gold;
+                }
+                else {
+                    color = COLORS.red;
+                }
+                var circleLatLng = geofence.circle.getCenter();
+                var locationLatLng = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
+                var distance = google.maps.geometry.spherical.computeDistanceBetween(circleLatLng, locationLatLng);
+                // Push event
+                geofence.events.push({
+                    action: event.action,
+                    location: event.location,
+                    distance: distance
+                });
+                var heading = google.maps.geometry.spherical.computeHeading(circleLatLng, locationLatLng);
+                var circleEdgeLatLng = google.maps.geometry.spherical.computeOffset(circleLatLng, geofence.circle.getRadius(), heading);
+                geofence.events.push({
+                    location: event.location,
+                    action: event.action,
+                    distance: distance
+                });
+                var geofenceEdgeMarker = new google.maps.Marker({
+                    zIndex: 1000,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 5,
+                        fillColor: color,
+                        fillOpacity: 0.7,
+                        strokeColor: COLORS.black,
+                        strokeWeight: 1,
+                        strokeOpacity: 1
+                    },
+                    map: map,
+                    position: circleEdgeLatLng
+                });
+                this.geofenceHitMarkers.push(geofenceEdgeMarker);
+                var locationMarker = this.buildLocationMarker(location, {
+                    showHeading: true
+                });
+                locationMarker.setMap(map);
+                this.geofenceHitMarkers.push(locationMarker);
+                var polyline = new google.maps.Polyline({
+                    map: map,
+                    zIndex: 1000,
+                    geodesic: true,
+                    strokeColor: COLORS.black,
+                    strokeOpacity: 1,
+                    strokeWeight: 1,
+                    path: [circleEdgeLatLng, locationMarker.getPosition()]
+                });
+                this.geofenceHitMarkers.push(polyline);
+                // Change the color of activated geofence to light-grey.
+                circle.activated = true;
+                circle.setOptions({
+                    fillColor: COLORS.grey,
+                    fillOpacity: 0.2,
+                    strokeColor: COLORS.grey,
+                    strokeOpacity: 0.4
+                });
+            };
+            HomePage.prototype.onHttpSuccess = function (response) {
+                console.log('[js] http success: ', response);
+            };
+            HomePage.prototype.onSchedule = function (event) {
+                console.log('[js] schedule: ', event);
+            };
+            HomePage.prototype.onHttpFailure = function (response) {
+                console.log('[js] http FAILURE: ', response);
+            };
+            HomePage.prototype.setCenter = function (location) {
+                this.updateCurrentLocationMarker(location);
+                setTimeout(function () {
+                    this.map.setCenter(new google.maps.LatLng(location.coords.latitude, location.coords.longitude));
+                }.bind(this));
+            };
+            HomePage.prototype.updateCurrentLocationMarker = function (location) {
+                var latlng = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
+                this.currentLocationMarker.setPosition(latlng);
+                this.locationAccuracyCircle.setCenter(latlng);
+                this.locationAccuracyCircle.setRadius(location.coords.accuracy);
+                if (location.sample === true) {
+                    return;
+                }
+                if (this.lastLocation) {
+                    this.locationMarkers.push(this.buildLocationMarker(location));
+                }
+                // Add breadcrumb to current Polyline path.
+                this.polyline.getPath().push(latlng);
+                if (!this.settingsService.state.mapHidePolyline) {
+                    this.polyline.setMap(this.map);
+                }
+                this.lastLocation = location;
+            };
+            // Build a bread-crumb location marker.
+            HomePage.prototype.buildLocationMarker = function (location, options) {
+                options = options || {};
+                var icon = 'imgs/bearing_arrow_green.png';// google.maps.SymbolPath.CIRCLE;
+                var scale = 3;
+                var zIndex = 1;
+                var anchor;
+                var strokeWeight = 1;
+                if (!this.lastDirectionChangeLocation) {
+                    this.lastDirectionChangeLocation = location;
+                }
+                // Render an arrow marker if heading changes by 10 degrees or every 5 points.
+                var deltaHeading = Math.abs(location.coords.heading - this.lastDirectionChangeLocation.coords.heading);
+                if ((deltaHeading >= 15) || !(this.locationMarkers.length % 5) || options.showHeading) {
+                    icon = google.maps.SymbolPath.FORWARD_CLOSED_ARROW;
+                    scale = 2;
+                    strokeWeight = 1;
+                    anchor = new google.maps.Point(0, 2.6);
+                    this.lastDirectionChangeLocation = location;
+                }
+                return new google.maps.Marker({
+                    zIndex: zIndex,
+                    icon: {
+                        path: icon,
+                        rotation: location.coords.heading,
+                        scale: scale,
+                        anchor: anchor,
+                        fillColor: COLORS.polyline_color,
+                        fillOpacity: 1,
+                        strokeColor: COLORS.black,
+                        strokeWeight: strokeWeight,
+                        strokeOpacity: 1
+                    },
+                    map: (!this.settingsService.state.mapHideMarkers) ? this.map : null,
+                    position: new google.maps.LatLng(location.coords.latitude, location.coords.longitude)
+                });
+            };
+            HomePage.prototype.buildGeofenceMarker = function (params) {
+                var _this = this;
+                // Add longpress event for adding GeoFence of hard-coded radius 200m.
+                var geofence = new google.maps.Circle({
+                    identifier: params.identifier,
+                    zIndex: 100,
+                    fillColor: COLORS.green,
+                    fillOpacity: 0.2,
+                    strokeColor: COLORS.green,
+                    strokeWeight: 1,
+                    strokeOpacity: 0.7,
+                    params: params,
+                    radius: parseInt(params.radius, 10),
+                    center: new google.maps.LatLng(params.latitude, params.longitude),
+                    map: this.map
+                });
+                // Add 'click' listener to geofence so we can edit it.
+                google.maps.event.addListener(geofence, 'click', function () {
+                    _this.settingsService.toast('Click geofence ' + geofence.identifier, null, 1000);
+                });
+                return geofence;
+            };
+            HomePage.prototype.buildStopZoneMarker = function (latlng) {
+                return new google.maps.Marker({
+                    zIndex: 1,
+                    map: this.map,
+                    position: latlng,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 12,
+                        fillColor: COLORS.red,
+                        fillOpacity: 0.3,
+                        strokeColor: COLORS.red,
+                        strokeWeight: 1,
+                        strokeOpacity: 0.7
+                    }
+                });
+            };
+            HomePage.prototype.showStationaryCircle = function (location) {
+                var coords = location.coords;
+                var radius = 200;// this.bgService.isLocationTrackingMode() ? 200 : (this.state.geofenceProximityRadius / 2);
+                var center = new google.maps.LatLng(coords.latitude, coords.longitude);
+                this.stationaryRadiusCircle.setRadius(radius);
+                this.stationaryRadiusCircle.setCenter(center);
+                this.stationaryRadiusCircle.setMap(this.map);
+                this.map.setCenter(center);
+            };
+            HomePage.prototype.hideStationaryCircle = function () {
+                // Create a little red breadcrumb circle of our last stop-position
+                var latlng = this.stationaryRadiusCircle.getCenter();
+                var stopZone = this.buildStopZoneMarker(latlng);
+                var lastMarker = this.locationMarkers.pop();
+                if (lastMarker) {
+                    lastMarker.setMap(null);
+                }
+                this.locationMarkers.push(stopZone);
+                this.stationaryRadiusCircle.setMap(null);
+            };
+            HomePage.prototype.resetMarkers = function () {
+                // Clear location-markers.
+                this.locationMarkers.forEach(function (marker) {
+                    marker.setMap(null);
+                });
+                this.locationMarkers = [];
+                // Clear geofence hit markers
+                this.geofenceHitMarkers.forEach(function (marker) {
+                    marker.setMap(null);
+                });
+                this.polyline.setPath([]);
+            };
+            HomePage.prototype.clearMarkers = function () {
+                this.resetMarkers();
+                this.geofenceMarkers.forEach(function (marker) {
+                    marker.setMap(null);
+                });
+                this.geofenceMarkers = [];
+                // Clear red stationaryRadius marker
+                this.stationaryRadiusCircle.setMap(null);
+                // Clear blue route PolyLine
+                this.polyline.setMap(null);
+                this.polyline.setPath([]);
+            };
+            HomePage.prototype.alert = function (title, message) {
+            };
+            return HomePage;
+        }());
+
+    </script>
+    <script type="text/javascript">
+        var bgSET = {
+            common: [
+                // Geolocation
+                { name: 'desiredAccuracy', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [-1, 0, 10, 100, 1000], defaultValue: 0 },
+                { name: 'distanceFilter', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, 10, 50, 100, 1000], defaultValue: 20 },
+                { name: 'disableElasticity', group: 'geolocation', dataType: 'boolean', inputType: 'toggle', values: ['true', 'false'], defaultValue: 'false' },
+                { name: 'geofenceProximityRadius', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [1000, 2500, 5000, 10000, 100000], defaultValue: 1000 },
+                { name: 'locationTimeout', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, 5, 10, 30, 60], defaultValue: 60 },
+                // HTTP
+                { name: 'url', group: 'http', ignore: true, inputType: 'text', dataType: 'string', defaultValue: 'http://posttestserver.com/post.php?dir=ionic-cordova-background-geolocation' },
+                { name: 'method', group: 'http', inputType: 'select', dataType: 'string', values: ['POST', 'PUT'], defaultValue: 'POST' },
+                { name: 'autoSync', group: 'http', dataType: 'boolean', inputType: 'toggle', values: ['true', 'false'], defaultValue: 'true' },
+                { name: 'autoSyncThreshold', group: 'http', dataType: 'integer', inputType: 'select', values: [0, 5, 10, 25, 50, 100], defaultValue: 0 },
+                { name: 'batchSync', group: 'http', dataType: 'boolean', inputType: 'toggle', values: ['true', 'false'], defaultValue: 'false' },
+                { name: 'maxBatchSize', group: 'http', dataType: 'integer', inputType: 'select', values: [-1, 5, 10, 50, 100] },
+                { name: 'maxRecordsToPersist', group: 'http', dataType: 'integer', inputType: 'select', values: [-1, 0, 1, 5, 10] },
+                // Application
+                { name: 'stopOnTerminate', group: 'application', dataType: 'boolean', inputType: 'toggle', values: ['true', 'false'], defaultValue: 'true' },
+                { name: 'startOnBoot', group: 'application', dataType: 'boolean', inputType: 'toggle', values: ['true', 'false'], defaultValue: 'false' },
+                { name: 'stopTimeout', group: 'activity_recognition', dataType: 'integer', inputType: 'select', values: [0, 1, 3, 5, 10, 15], defaultValue: 1 },
+                { name: 'activityRecognitionInterval', group: 'activity_recognition', dataType: 'integer', inputType: 'select', values: [0, 1000, 10000, 30000, 60000], defaultValue: 10000 },
+                { name: 'heartbeatInterval', group: 'application', dataType: 'integer', inputType: 'select', values: [-1, 60, (2 * 60), (5 * 60), (15 * 60)], defaultValue: 60 },
+                // Logging & Debug
+                { name: 'debug', group: 'debug', dataType: 'boolean', inputType: 'toggle', values: ['true', 'false'], defaultValue: 'true' },
+                { name: 'logLevel', group: 'debug', dataType: 'integer', inputType: 'select', values: [0, 1, 2, 3, 4, 5], defaultValue: 5 },
+                { name: 'logMaxDays', group: 'debug', dataType: 'integer', inputType: 'select', values: [0, 1, 2, 3, 4, 5, 6, 7], defaultValue: 5 }
+            ],
+            iOS: [
+                // Geolocation
+                { name: 'stationaryRadius', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [25, 50, 100, 500, 1000], defaultValue: 25 },
+                { name: 'activityType', group: 'geolocation', dataType: 'string', inputType: 'select', values: ['Other', 'AutomotiveNavigation', 'Fitness', 'OtherNavigation'], defaultValue: 'OtherNavigation' },
+                { name: 'useSignificantChangesOnly', group: 'geolocation', dataType: 'boolean', inputType: 'toggle', values: ['true', 'false'], defaultValue: 'false' },
+                // Activity Recognition
+                { name: 'stopDetectionDelay', group: 'activity_recognition', dataType: 'integer', inputType: 'select', values: [0, 1, 2, 5], defaultValue: 0 },
+                { name: 'disableStopDetection', group: 'activity_recognition', dataType: 'boolean', inputType: 'toggle', values: ['true', 'false'], defaultValue: false },
+                { name: 'disableMotionActivityUpdates', group: 'activity_recognition', dataType: 'boolean', inputType: 'toggle', values: ['true', 'false'], defaultValue: 'false' },
+                { name: 'preventSuspend', group: 'application', dataType: 'boolean', inputType: 'toggle', values: ['true', 'false'], defaultValue: 'false' }
+            ],
+            Android: [
+                // Geolocation
+                { name: 'locationUpdateInterval', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, 1000, 5000, 10000, 30000, 60000], defaultValue: 5000 },
+                { name: 'fastestLocationUpdateInterval', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, 1000, 5000, 10000, 30000, 60000], defaultValue: 1000 },
+                { name: 'deferTime', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, 10 * 1000, 30 * 1000, 60 * 1000, 10 * 60 * 1000], defaultValue: 0 },
+                // Activity Recognition
+                { name: 'triggerActivities', group: 'activity_recognition', dataType: 'string', inputType: 'select', multiple: true, values: ['in_vehicle', 'on_bicycle', 'on_foot', 'running', 'walking'], defaultValue: 'in_vehicle, on_bicycle, running, walking, on_foot' },
+                // Application
+                { name: 'foregroundService', group: 'application', dataType: 'boolean', inputType: 'toggle', values: ['true', 'false'], defaultValue: 'true' },
+                { name: 'notificationPriority', ignore: true, group: 'application', dataType: 'integer', inputType: 'select', values: [0, 1, -1, 2, -2], defaultValue: 0 },
+                { name: 'forceReloadOnBoot', group: 'application', dataType: 'boolean', inputType: 'toggle', values: ['true', 'false'], defaultValue: 'false' },
+                { name: 'forceReloadOnMotionChange', group: 'application', dataType: 'boolean', inputType: 'toggle', values: ['true', 'false'], defaultValue: 'false' },
+                { name: 'forceReloadOnLocationChange', group: 'application', dataType: 'boolean', inputType: 'toggle', values: ['true', 'false'], defaultValue: 'false' },
+                { name: 'forceReloadOnGeofence', group: 'application', dataType: 'boolean', inputType: 'toggle', values: ['true', 'false'], defaultValue: 'false' },
+                { name: 'forceReloadOnHeartbeat', group: 'application', dataType: 'boolean', inputType: 'toggle', values: ['true', 'false'], defaultValue: 'false' }
+            ]
+        };
+        /**
+        * A collection of soundId for use with BackgroundGeolocation#playSound
+        */
+        var SOUND_MAP = {
+            "iOS": {
+                "LONG_PRESS_ACTIVATE": 1113,
+                "LONG_PRESS_CANCEL": 1075,
+                "ADD_GEOFENCE": 1114,
+                "BUTTON_CLICK": 1104,
+                "MESSAGE_SENT": 1303,
+                "ERROR": 1006,
+                "OPEN": 1502,
+                "CLOSE": 1503,
+                "FLOURISH": 1509
+            },
+            "Android": {
+                "LONG_PRESS_ACTIVATE": 27,
+                "LONG_PRESS_CANCEL": 94,
+                "ADD_GEOFENCE": 28,
+                "BUTTON_CLICK": 19,
+                "MESSAGE_SENT": 90,
+                "ERROR": 89,
+                "OPEN": 37,
+                "CLOSE": 94,
+                "FLOURISH": 37
+            }
+        };
+        var BGService = (function () {
+            function BGService(platform, events, device) {
+                this.platform = platform;
+                this.events = events;
+                this.device = device;
+                // We don't need cordova-sqlite-storage.
+                this.storage = window.localStorage;
+                // We fetch put Device.uuid into localStorage to determine if this is first-boot of app.
+                this.uuid = this.storage.getItem('device:uuid');
+                //this.platform.ready().then(this.init.bind(this));
+            }
+            BGService.prototype.init = function () {
+                this.deviceInfo = {
+                    model: this.device.model,
+                    platform: this.device.platform,
+                    uuid: this.device.uuid,
+                    version: this.device.version,
+                    manufacturer: this.device.manufacturer,
+                    framework: 'Cordova'
+                };
+                ///
+                // Here is the glorious reference to the BackgroundGeolocation plugin
+                //
+                this.plugin = window.BackgroundGeolocation;
+                // Build a collection of available settings by platform for use on the Settings screen
+                var settings = [].concat(bgSET.common).concat(bgSET[this.device.platform || 'iOS']);
+                this.settings = {
+                    list: settings,
+                    map: {}
+                };
+                for (var n = 0, len = settings.length; n < len; n++) {
+                    var setting = settings[n];
+                    this.settings.map[setting.name] = setting;
+                }
+                ;
+            };
+            /**
+            * Return Array of all settings by platform
+            */
+            BGService.prototype.getSettings = function () {
+                return this.settings.list;
+            };
+            BGService.prototype.getPlatformSettings = function (group) {
+                var settings = [];
+                this.settings.list.forEach(function (setting) {
+                    if ((setting.group === group) && !setting.ignore) {
+                        settings.push(setting);
+                    }
+                });
+                return settings;
+            };
+            /**
+            * Get current BackgroundGeolocation state.
+            * @return {Object}
+            */
+            BGService.prototype.getState = function (callback) {
+                var _this = this;
+                this.plugin.getState(function (state) {
+                    _this.state = state;
+                    if (_this.uuid) {
+                        callback(state);
+                        return;
+                    }
+                    // FIRST BOOT OF APP!  Cache the device uuid so we know we've seen this device before.
+                    _this.uuid = _this.device.uuid;
+                    _this.storage.setItem('device:uuid', _this.uuid);
+                    // Override a few defaults on first-boot so user can hear debug sounds.
+                    _this.state.foregroundService = true;
+                    _this.state.autoSync = true;
+                    _this.state.heartbeatInterval = 60;
+                    _this.state.stopOnTerminate = false;
+                    _this.state.startOnBoot = true;
+                    _this.state.url = __WEBPACK_IMPORTED_MODULE_3__consoleConfig__["defaultLocationUrl"];
+                    _this.state.debug = true;
+                    _this.state.logLevel = _this.plugin.LOG_LEVEL_VERBOSE;
+                    _this.state.params = { device: _this.deviceInfo, company_token: __WEBPACK_IMPORTED_MODULE_3__consoleConfig__["companyToken"] };
+                    callback(_this.state);
+                });
+            };
+            /**
+            * @return BackgroundGeolocation
+            */
+            BGService.prototype.getPlugin = function () {
+                return this.plugin;
+            };
+            /**
+            * Set a BackgroundGeolocation config option
+            * @param {String} name
+            * @param {Mixed} value
+            */
+            BGService.prototype.set = function (name, value, callback) {
+                var _this = this;
+                console.log('BGService#set ', name, value);
+                var setting = this.settings.map[name];
+                if (!setting) {
+                    // No change:  Ignore
+                    console.info('ignored');
+                    return;
+                }
+                // Type-casting String from form-field value
+                switch (setting.dataType) {
+                    case 'integer':
+                        value = parseInt(value, 10);
+                        break;
+                    case 'boolean':
+                        value = (typeof (value) === 'string') ? (value === 'true') : value;
+                        break;
+                }
+                if (this.state[name] === value) {
+                    return;
+                }
+                this.playSound('BUTTON_CLICK');
+                // Update state
+                this.state[name] = value;
+                // Create config {} for BackgroundGeolocation
+                var config = {};
+                config[name] = value;
+                this.plugin.setConfig(config, function (state) {
+                    _this.events.publish('change', name, value);
+                    if (typeof (callback) == 'function') {
+                        callback(state);
+                    }
+                });
+            };
+            /**
+            * Start BackgroundGeolocation in provided mode
+            * @param {String} trackingMode
+            */
+            BGService.prototype.start = function (trackingMode) {
+                var _this = this;
+                var onStarted = function (state) {
+                    _this.events.publish('start', trackingMode, state);
+                };
+                this.state.trackingMode = trackingMode;
+                if (trackingMode === 'location') {
+                    this.plugin.start(onStarted);
+                }
+                else {
+                    this.plugin.startGeofences(onStarted);
+                }
+            };
+            /**
+            * Subscribe to BGService events
+            */
+            BGService.prototype.on = function (event, callback) {
+                this.events.subscribe(event, callback);
+            };
+            BGService.prototype.isLocationTrackingMode = function () {
+                return (this.state.trackingMode === 'location') || (this.state.trackingMode === 1);
+            };
+            BGService.prototype.getOptionsForSetting = function (name) {
+                var setting = this.settings.map[name];
+                if (!setting) {
+                    console.warn('Unknown option: ', name);
+                    return [];
+                }
+                else {
+                    return setting.values;
+                }
+            };
+            BGService.prototype.playSound = function (name) {
+                var soundId = 0;
+                if (typeof (name) === 'string') {
+                    soundId = SOUND_MAP[this.device.platform][name];
+                }
+                else if (typeof (name) === 'number') {
+                    soundId = name;
+                }
+                if (!soundId) {
+                    alert('Invalid sound id provided to BGService#playSound' + name);
+                    return;
+                }
+                this.plugin.playSound(soundId);
+            };
+            /**
+            * Returns an array of locations for iOS Simulator City Drive Route
+            * @return {Array}
+            */
+            BGService.prototype.getCityDriveData = function () {
+                return [{ "lat": "37.33527476", "lng": "-122.03254703" }, { "lat": "37.33500926", "lng": "-122.03272188" }, { "lat": "37.33467638", "lng": "-122.03432425" }, { "lat": "37.33453849", "lng": "-122.03695223" }, { "lat": "37.33447068", "lng": "-122.04007348" }, { "lat": "37.33446146", "lng": "-122.04380955" }, { "lat": "37.33426985", "lng": "-122.04751058" }, { "lat": "37.33352458", "lng": "-122.05100549" }, { "lat": "37.33275353", "lng": "-122.05462472" }, { "lat": "37.33228724", "lng": "-122.05833354" }, { "lat": "37.33307736", "lng": "-122.06203541" }, { "lat": "37.33422447", "lng": "-122.06562781" }, { "lat": "37.33435661", "lng": "-122.06939204" }, { "lat": "37.33369775", "lng": "-122.07309474" }, { "lat": "37.33368006", "lng": "-122.07665613" }, { "lat": "37.33492184", "lng": "-122.07997503" }, { "lat": "37.3370055", "lng": "-122.0827595" }, { "lat": "37.33879885", "lng": "-122.08577472" }, { "lat": "37.34046597", "lng": "-122.08886286" }, { "lat": "37.34208941", "lng": "-122.09195687" }, { "lat": "37.34415677", "lng": "-122.09439031" }, { "lat": "37.34576798", "lng": "-122.09727888" }, { "lat": "37.34719244", "lng": "-122.1006624" }, { "lat": "37.34894824", "lng": "-122.1036539" }, { "lat": "37.35145376", "lng": "-122.10569934" }, { "lat": "37.35357644", "lng": "-122.10818206" }, { "lat": "37.35478615", "lng": "-122.11144128" }, { "lat": "37.35583234", "lng": "-122.11484701" }, { "lat": "37.35772158", "lng": "-122.11764607" }, { "lat": "37.36040727", "lng": "-122.11952001" }, { "lat": "37.36303768", "lng": "-122.12160442" }, { "lat": "37.36457081", "lng": "-122.12476867" }, { "lat": "37.36489536", "lng": "-122.12851823" }, { "lat": "37.36543834", "lng": "-122.13217241" }, { "lat": "37.3664761", "lng": "-122.13564763" }, { "lat": "37.36776176", "lng": "-122.13898061" }, { "lat": "37.36994839", "lng": "-122.1416339" }, { "lat": "37.37240005", "lng": "-122.14386038" }, { "lat": "37.37481249", "lng": "-122.14611939" }, { "lat": "37.37709618", "lng": "-122.14869624" }, { "lat": "37.37961188", "lng": "-122.15082139" }, { "lat": "37.3826398", "lng": "-122.15178036" }, { "lat": "37.38560981", "lng": "-122.15272559" }, { "lat": "37.38774539", "lng": "-122.15510789" }, { "lat": "37.38869141", "lng": "-122.15849049" }, { "lat": "37.38931302", "lng": "-122.16207476" }, { "lat": "37.39081987", "lng": "-122.1652427" }, { "lat": "37.39210109", "lng": "-122.16863067" }, { "lat": "37.39242056", "lng": "-122.17227965" }, { "lat": "37.39361482", "lng": "-122.17556879" }, { "lat": "37.39578711", "lng": "-122.17805511" }, { "lat": "37.39821434", "lng": "-122.18044236" }, { "lat": "37.40071157", "lng": "-122.18290622" }, { "lat": "37.40313012", "lng": "-122.18535374" }, { "lat": "37.40549529", "lng": "-122.18774837" }, { "lat": "37.40759705", "lng": "-122.19035128" }, { "lat": "37.40890928", "lng": "-122.19364872" }, { "lat": "37.41002813", "lng": "-122.19717013" }, { "lat": "37.4111682", "lng": "-122.20078524" }, { "lat": "37.41233794", "lng": "-122.20442475" }, { "lat": "37.41363889", "lng": "-122.20791833" }, { "lat": "37.41583072", "lng": "-122.2106204" }, { "lat": "37.41782917", "lng": "-122.21338064" }, { "lat": "37.41872658", "lng": "-122.21683566" }, { "lat": "37.41935866", "lng": "-122.22058933" }, { "lat": "37.4209964", "lng": "-122.22388736" }, { "lat": "37.42303224", "lng": "-122.22680837" }, { "lat": "37.42510651", "lng": "-122.22979057" }, { "lat": "37.42738525", "lng": "-122.23260102" }, { "lat": "37.42942843", "lng": "-122.23549663" }, { "lat": "37.4313864", "lng": "-122.23829728" }, { "lat": "37.43354365", "lng": "-122.24095367" }, { "lat": "37.4357105", "lng": "-122.24350931" }, { "lat": "37.4378918", "lng": "-122.24613695" }, { "lat": "37.44000262", "lng": "-122.24876996" }, { "lat": "37.44207177", "lng": "-122.25146784" }, { "lat": "37.44364246", "lng": "-122.25458952" }, { "lat": "37.44423451", "lng": "-122.25815644" }, { "lat": "37.44401797", "lng": "-122.26182293" }, { "lat": "37.44381697", "lng": "-122.26544651" }, { "lat": "37.4444387", "lng": "-122.26900388" }, { "lat": "37.44598499", "lng": "-122.27225807" }, { "lat": "37.44805758", "lng": "-122.27523289" }, { "lat": "37.45014137", "lng": "-122.27827786" }, { "lat": "37.45213903", "lng": "-122.28131706" }, { "lat": "37.45408782", "lng": "-122.28428358" }, { "lat": "37.45607437", "lng": "-122.28728422" }, { "lat": "37.45855399", "lng": "-122.28964389" }, { "lat": "37.46150337", "lng": "-122.29066665" }, { "lat": "37.46449927", "lng": "-122.29080537" }, { "lat": "37.46741706", "lng": "-122.29164222" }, { "lat": "37.47004943", "lng": "-122.29347317" }, { "lat": "37.4724045", "lng": "-122.29584441" }, { "lat": "37.47484795", "lng": "-122.29807718" }, { "lat": "37.47775391", "lng": "-122.29919189" }, { "lat": "37.48081016", "lng": "-122.29901151" }, { "lat": "37.48386847", "lng": "-122.29850608" }, { "lat": "37.4868127", "lng": "-122.2981216" }, { "lat": "37.48974125", "lng": "-122.29883038" }, { "lat": "37.49226793", "lng": "-122.30073474" }, { "lat": "37.49413538", "lng": "-122.3036213" }, { "lat": "37.4951695", "lng": "-122.30711999" }, { "lat": "37.49605031", "lng": "-122.31058583" }, { "lat": "37.49739544", "lng": "-122.3138981" }, { "lat": "37.49913263", "lng": "-122.31702405" }, { "lat": "37.50040366", "lng": "-122.32036315" }, { "lat": "37.50083658", "lng": "-122.32388539" }, { "lat": "37.50117039", "lng": "-122.32749548" }, { "lat": "37.50237035", "lng": "-122.33083005" }, { "lat": "37.50420426", "lng": "-122.33381577" }, { "lat": "37.50606869", "lng": "-122.33688933" }, { "lat": "37.50799594", "lng": "-122.34003061" }, { "lat": "37.50988405", "lng": "-122.34301482" }, { "lat": "37.51203087", "lng": "-122.34564414" }, { "lat": "37.51425798", "lng": "-122.34819157" }, { "lat": "37.51644813", "lng": "-122.35068376" }, { "lat": "37.51869146", "lng": "-122.35307638" }, { "lat": "37.52133683", "lng": "-122.35490229" }, { "lat": "37.52404792", "lng": "-122.35651279" }, { "lat": "37.52656144", "lng": "-122.35869996" }, { "lat": "37.52949012", "lng": "-122.36013184" }, { "lat": "37.53245962", "lng": "-122.36139139" }, { "lat": "37.53535502", "lng": "-122.36269562" }, { "lat": "37.53806531", "lng": "-122.36427066" }, { "lat": "37.54071957", "lng": "-122.36586045" }, { "lat": "37.54319399", "lng": "-122.36775116" }, { "lat": "37.54551481", "lng": "-122.37012089" }, { "lat": "37.54781925", "lng": "-122.37250714" }, { "lat": "37.55009393", "lng": "-122.37486312" }, { "lat": "37.55254949", "lng": "-122.37717024" }, { "lat": "37.55541199", "lng": "-122.37918458" }, { "lat": "37.55818716", "lng": "-122.38106338" }, { "lat": "37.56068828", "lng": "-122.38341593" }, { "lat": "37.56314841", "lng": "-122.38588298" }, { "lat": "37.56541169", "lng": "-122.38835698" }, { "lat": "37.56674169", "lng": "-122.39169239" }, { "lat": "37.5685417", "lng": "-122.39470024" }, { "lat": "37.57095669", "lng": "-122.39698791" }, { "lat": "37.57337626", "lng": "-122.39928572" }, { "lat": "37.57613294", "lng": "-122.40094584" }, { "lat": "37.57901078", "lng": "-122.4022173" }, { "lat": "37.58156135", "lng": "-122.40405955" }, { "lat": "37.58410689", "lng": "-122.40616551" }, { "lat": "37.58628103", "lng": "-122.40888284" }, { "lat": "37.58845823", "lng": "-122.41162422" }, { "lat": "37.59089234", "lng": "-122.41402865" }, { "lat": "37.5933155", "lng": "-122.41641054" }, { "lat": "37.59572459", "lng": "-122.41875689" }, { "lat": "37.59795493", "lng": "-122.42134262" }, { "lat": "37.60011457", "lng": "-122.42399767" }, { "lat": "37.60240224", "lng": "-122.4265399" }, { "lat": "37.60520008", "lng": "-122.42789551" }, { "lat": "37.60813618", "lng": "-122.42777573" }, { "lat": "37.61097345", "lng": "-122.42659053" }, { "lat": "37.61359414", "lng": "-122.42477627" }, { "lat": "37.61652164", "lng": "-122.42409633" }, { "lat": "37.61941491", "lng": "-122.42515597" }, { "lat": "37.62223282", "lng": "-122.42696981" }, { "lat": "37.62499411", "lng": "-122.42876044" }, { "lat": "37.62751237", "lng": "-122.43105867" }, { "lat": "37.62961128", "lng": "-122.43380726" }, { "lat": "37.63173002", "lng": "-122.43652912" }, { "lat": "37.63434333", "lng": "-122.43855737" }, { "lat": "37.63721702", "lng": "-122.43994642" }, { "lat": "37.63973671", "lng": "-122.44194609" }, { "lat": "37.64209642", "lng": "-122.44410611" }, { "lat": "37.6439212", "lng": "-122.44706014" }, { "lat": "37.64593185", "lng": "-122.44975467" }, { "lat": "37.64856629", "lng": "-122.45139107" }, { "lat": "37.65116761", "lng": "-122.45299486" }, { "lat": "37.65334007", "lng": "-122.45534515" }, { "lat": "37.65538199", "lng": "-122.45796869" }, { "lat": "37.65749297", "lng": "-122.4606685" }, { "lat": "37.6595944", "lng": "-122.46334517" }, { "lat": "37.66213336", "lng": "-122.46529514" }, { "lat": "37.66513186", "lng": "-122.46553863" }, { "lat": "37.6681835", "lng": "-122.46560385" }, { "lat": "37.67115958", "lng": "-122.46650842" }, { "lat": "37.6737871", "lng": "-122.46830709" }, { "lat": "37.67626076", "lng": "-122.47032856" }, { "lat": "37.67888283", "lng": "-122.47161778" }, { "lat": "37.681853", "lng": "-122.47152482" }, { "lat": "37.6847816", "lng": "-122.47134126" }, { "lat": "37.6876731", "lng": "-122.47090381" }, { "lat": "37.69061264", "lng": "-122.47027005" }, { "lat": "37.69348641", "lng": "-122.47026259" }, { "lat": "37.69632218", "lng": "-122.47076182" }, { "lat": "37.69914914", "lng": "-122.47129566" }, { "lat": "37.70201202", "lng": "-122.47133229" }, { "lat": "37.70486296", "lng": "-122.47116624" }, { "lat": "37.70741441", "lng": "-122.4695213" }, { "lat": "37.70957963", "lng": "-122.46701645" }, { "lat": "37.71043642", "lng": "-122.46355472" }, { "lat": "37.71046027", "lng": "-122.45988294" }, { "lat": "37.71069928", "lng": "-122.45637822" }, { "lat": "37.71224348", "lng": "-122.45340591" }, { "lat": "37.71448702", "lng": "-122.45078271" }, { "lat": "37.71693873", "lng": "-122.44871305" }, { "lat": "37.71990228", "lng": "-122.44822204" }, { "lat": "37.72291888", "lng": "-122.44775048" }, { "lat": "37.72576768", "lng": "-122.44632572" }, { "lat": "37.72805372", "lng": "-122.44386563" }, { "lat": "37.72953195", "lng": "-122.44070582" }, { "lat": "37.7307498", "lng": "-122.43723772" }, { "lat": "37.73174796", "lng": "-122.43356938" }, { "lat": "37.73216621", "lng": "-122.42992443" }, { "lat": "37.73150681", "lng": "-122.42617839" }, { "lat": "37.73152823", "lng": "-122.42250586" }, { "lat": "37.73190474", "lng": "-122.4188029" }, { "lat": "37.73208047", "lng": "-122.4151556" }, { "lat": "37.73335846", "lng": "-122.41185347" }, { "lat": "37.73467442", "lng": "-122.40896246" }, { "lat": "37.7367644", "lng": "-122.40753804" }, { "lat": "37.73918836", "lng": "-122.40786326" }, { "lat": "37.74134411", "lng": "-122.40745439" }, { "lat": "37.7433128", "lng": "-122.40606023" }, { "lat": "37.7454038", "lng": "-122.40480714" }, { "lat": "37.74791032", "lng": "-122.40401446" }, { "lat": "37.75036492", "lng": "-122.40324249" }, { "lat": "37.7530224", "lng": "-122.40280453" }, { "lat": "37.75548823", "lng": "-122.40305884" }, { "lat": "37.75750915", "lng": "-122.40390315" }, { "lat": "37.75912761", "lng": "-122.40587398" }, { "lat": "37.76147723", "lng": "-122.40613148" }];
+            };
+            return BGService;
+        }());
+    </script>
+
+    <script type="text/javascript">
+        var bando = new HomePage(null, new BGService(), new SettingsService());
+        bando.configureMap(document.getElementById('gmap'));
+        bando.setCenter({ coords: { latitude: 10.9781311, longitude: 106.6718134 } });
+        bando.showStationaryCircle({ coords: { latitude: 10.9781311, longitude: 106.6718134 } });
+
+
+        var socket = io("https://jshared.herokuapp.com");//"http://192.168.1.91:3000");
+        //client nhận dữ liệu từ server
+        socket.on("geoloc", function (data) {
+            try {
+                bando.updateCurrentLocationMarker({ coords: { latitude: data.Lat, longitude: data.Lng } });
+            }
+            catch (err) {
+
+            }
+        });
+
+
+
+    </script>
+
+    <script id="rendered-js">
+      // Very basic slider
+
+var slider,
+select1,
+select2,
+select3,
+sliderClasses;
+
+slider = document.querySelector('.content-slider');
+select1 = document.getElementById('select-item-1');
+select2 = document.getElementById('select-item-2');
+select3 = document.getElementById('select-item-3');
+
+sliderClasses = ['slide-1-active', 'slide-2-active', 'slide-3-active'];
+
+select1.addEventListener('click', function () {
+  slider.className = 'content-slider ';
+  slider.classList.add(sliderClasses[0]);
+  select1.parentNode.className = '';
+  select2.parentNode.className = '';
+  select3.parentNode.className = '';
+  this.parentNode.className = 'active';
+});
+select2.addEventListener('click', function () {
+  slider.className = 'content-slider ';
+  slider.classList.add(sliderClasses[1]);
+  select1.parentNode.className = '';
+  select2.parentNode.className = '';
+  select3.parentNode.className = '';
+  this.parentNode.className = 'active';
+});
+select3.addEventListener('click', function () {
+  slider.className = 'content-slider ';
+  slider.classList.add(sliderClasses[2]);
+  select1.parentNode.className = '';
+  select2.parentNode.className = '';
+  select3.parentNode.className = '';
+  this.parentNode.className = 'active';
+
+});
+      //# sourceURL=pen.js
+    </script>
+
+</body>
+</html>
